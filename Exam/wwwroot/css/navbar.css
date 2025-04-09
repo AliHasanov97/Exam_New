@@ -1,0 +1,92 @@
+﻿.navbar {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    padding: 0.5rem 0;
+    position: fixed; /* Əsas dəyişiklik */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: white; /* Arxa fon rəngi əlavə edin */
+}
+
+/* Digər elementlərin navbar altında qalmaması üçün */
+body {
+    padding-top: 65px; /* Navbar hündürlüyünə uyğun olaraq tənzimləyin */
+}
+
+/* Əvvəlki üslublarınız qalır */
+.navbar-brand {
+    transition: all 0.3s ease;
+}
+
+    .navbar-brand:hover {
+        transform: translateY(-2px);
+    }
+
+.nav-link {
+    position: relative;
+    padding: 0.5rem 1rem;
+    color: #495057;
+    transition: all 0.3s ease;
+}
+
+    .nav-link.active {
+        color: #4361ee;
+        font-weight: 600;
+    }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 1rem;
+            right: 1rem;
+            height: 3px;
+            background: #4361ee;
+            animation: underline 0.3s ease-out;
+        }
+
+@keyframes underline {
+    from {
+        transform: scaleX(0);
+    }
+
+    to {
+        transform: scaleX(1);
+    }
+}
+
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 8px;
+}
+
+.dropdown-item {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    margin: 2px 8px;
+    width: -webkit-fill-available;
+}
+
+/* Mobil üslublar */
+@media (max-width: 767.98px) {
+    #navbarContent {
+        padding: 1rem 0;
+    }
+
+    .nav-item {
+        margin: 4px 0;
+    }
+
+    .d-flex {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #eee;
+    }
+
+    /* Mobil üçün body padding-i azaldırıq */
+    body {
+        padding-top: 56px;
+    }
+}

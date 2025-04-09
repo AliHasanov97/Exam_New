@@ -1,0 +1,194 @@
+﻿
+
+<div class="dashboard-section">
+    <div class="section-title">
+        <i class="bi bi-clipboard-check-fill"></i>
+        <h3>İmtahan Nəticəsi</h3>
+        <div class="ms-auto">
+            <button class="btn btn-sm me-2" style="background: var(--primary-light); color: var(--primary);">
+                <i class="bi bi-download"></i> PDF Yüklə
+            </button>
+            <button class="btn btn-sm" style="background: var(--primary); color: white;">
+                <i class="bi bi-share"></i> Paylaş
+            </button>
+        </div>
+    </div>
+
+    <!-- Exam Header -->
+    <div class="exam-header" style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: var(--neu-shadow);">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h4>Riyaziyyat - Final İmtahanı</h4>
+                <div class="exam-meta">
+                    <span class="me-3"><i class="bi bi-calendar"></i> 15 Yanvar 2023</span>
+                    <span class="me-3"><i class="bi bi-clock"></i> 90 dəqiqə</span>
+                    <span><i class="bi bi-question-circle"></i> 25 sual</span>
+                </div>
+            </div>
+            <div class="col-md-4 text-end">
+                <div class="exam-score">
+                    <div class="score-circle" style="width: 80px; height: 80px; background: var(--success);">
+                        <span style="font-size: 1.5rem; font-weight: 600;">92</span>
+                    </div>
+                    <div class="score-text">
+                        <span>Ümumi bal</span>
+                        <strong>92/100</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance Summary -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="performance-card" style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; box-shadow: var(--neu-shadow);">
+                <h5><i class="bi bi-check-circle-fill text-success me-2"></i> Düzgün cavablar</h5>
+                <div class="performance-value">23</div>
+                <div class="performance-progress">
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 92%"></div>
+                    </div>
+                    <small>92% uğur</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="performance-card" style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; box-shadow: var(--neu-shadow);">
+                <h5><i class="bi bi-x-circle-fill text-danger me-2"></i> Yanlış cavablar</h5>
+                <div class="performance-value">2</div>
+                <div class="performance-progress">
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: 8%"></div>
+                    </div>
+                    <small>8% səhv</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="performance-card" style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; box-shadow: var(--neu-shadow);">
+                <h5><i class="bi bi-dash-circle-fill text-warning me-2"></i> Cavabsız suallar</h5>
+                <div class="performance-value">0</div>
+                <div class="performance-progress">
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 0%"></div>
+                    </div>
+                    <small>0% cavabsız</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+    <!-- Questions and Answers -->
+    <div class="dashboard-section" style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; box-shadow: var(--neu-shadow);">
+        <h5 class="mb-4"><i class="bi bi-question-circle-fill text-primary me-2"></i> Sual və cavablar</h5>
+
+        <!-- Question 1 (Correct) -->
+        <div class="question-item correct">
+            <div class="question-header">
+                <span class="question-number">1.</span>
+                <span class="question-status"><i class="bi bi-check-circle-fill text-success"></i> Düzgün cavab</span>
+            </div>
+            <div class="question-text">
+                <p>Düzbucaqlı üçbucağın katetləri 6 sm və 8 sm-dir. Hipotenuzun uzunluğu neçə sm-dir?</p>
+            </div>
+            <div class="answer-section">
+                <div class="answer-options">
+                    <div class="option correct">
+                        <span class="option-letter">A)</span>
+                        <span class="option-text">10 sm</span>
+                    </div>
+                    <div class="option">
+                        <span class="option-letter">B)</span>
+                        <span class="option-text">12 sm</span>
+                    </div>
+                    <div class="option">
+                        <span class="option-letter">C)</span>
+                        <span class="option-text">14 sm</span>
+                    </div>
+                    <div class="option">
+                        <span class="option-letter">D)</span>
+                        <span class="option-text">16 sm</span>
+                    </div>
+                </div>
+                <div class="answer-explanation">
+                    <h6><i class="bi bi-lightbulb-fill text-warning"></i> İzahat:</h6>
+                    <p>Pifaqor teoreminə görə: a² + b² = c². Burada 6² + 8² = 36 + 64 = 100 = c². Deməli, c = √100 = 10 sm.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 2 (Incorrect) -->
+        <div class="question-item incorrect">
+            <div class="question-header">
+                <span class="question-number">2.</span>
+                <span class="question-status"><i class="bi bi-x-circle-fill text-danger"></i> Yanlış cavab</span>
+            </div>
+            <div class="question-text">
+                <p>30° bucağın radianla ifadəsi neçədir?</p>
+            </div>
+            <div class="answer-section">
+                <div class="answer-options">
+                    <div class="option">
+                        <span class="option-letter">A)</span>
+                        <span class="option-text">π/3</span>
+                    </div>
+                    <div class="option correct">
+                        <span class="option-letter">B)</span>
+                        <span class="option-text">π/6</span>
+                    </div>
+                    <div class="option user-answer">
+                        <span class="option-letter">C)</span>
+                        <span class="option-text">π/4</span>
+                    </div>
+                    <div class="option">
+                        <span class="option-letter">D)</span>
+                        <span class="option-text">π/2</span>
+                    </div>
+                </div>
+                <div class="answer-explanation">
+                    <h6><i class="bi bi-lightbulb-fill text-warning"></i> İzahat:</h6>
+                    <p>Dərəcəni radiana çevirmək üçün: radian = dərəcə × (π/180). 30° × (π/180) = π/6.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 3 (Correct) -->
+        <div class="question-item correct">
+            <div class="question-header">
+                <span class="question-number">3.</span>
+                <span class="question-status"><i class="bi bi-check-circle-fill text-success"></i> Düzgün cavab</span>
+            </div>
+            <div class="question-text">
+                <p>2x² - 8x + 6 = 0 tənliyinin həllər çoxluğu hansıdır?</p>
+            </div>
+            <div class="answer-section">
+                <div class="answer-options">
+                    <div class="option">
+                        <span class="option-letter">A)</span>
+                        <span class="option-text">{1, 2}</span>
+                    </div>
+                    <div class="option">
+                        <span class="option-letter">B)</span>
+                        <span class="option-text">{2, 3}</span>
+                    </div>
+                    <div class="option correct">
+                        <span class="option-letter">C)</span>
+                        <span class="option-text">{1, 3}</span>
+                    </div>
+                    <div class="option">
+                        <span class="option-letter">D)</span>
+                        <span class="option-text">{3, 4}</span>
+                    </div>
+                </div>
+                <div class="answer-explanation">
+                    <h6><i class="bi bi-lightbulb-fill text-warning"></i> İzahat:</h6>
+                    <p>Tənliyi sadələşdirək: 2(x² - 4x + 3) = 0 ⇒ x² - 4x + 3 = 0. Diskriminant D = 16 - 12 = 4. Köklər: x₁ = (4+2)/2 = 3, x₂ = (4-2)/2 = 1.</p>
+                </div>
+            </div>
+        </div>
+
+     
+    </div>
+</div>

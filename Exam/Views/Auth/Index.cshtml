@@ -1,0 +1,210 @@
+﻿@{
+    ViewData["Title"] = "Profil Tamamlama";
+}
+@model User;
+<style>
+    .register-container {
+        max-width: 500px;
+        margin: 3rem auto;
+        padding: 2rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        text-align: center;
+    }
+
+    .profile-image-wrapper {
+        position: relative;
+        margin: 0 auto 2rem;
+        display: inline-block;
+    }
+
+    .profile-image {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #4361ee;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+        .profile-image:hover {
+            opacity: 0.9;
+            border-color: #3a0ca3;
+        }
+
+    .image-upload-label {
+        display: block;
+        padding: 10px 20px;
+        background-color: #4361ee;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        margin: 1rem auto;
+        width: fit-content;
+    }
+
+        .image-upload-label:hover {
+            background-color: #3a0ca3;
+            transform: translateY(-2px);
+        }
+
+    .image-upload-input {
+        display: none;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+        text-align: left;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #2b2d42;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #dee2e6;
+        font-size: 1rem;
+    }
+
+    .terms-check {
+        display: flex;
+        align-items: center;
+        margin: 1.5rem 0;
+    }
+
+        .terms-check input {
+            margin-right: 10px;
+        }
+
+    .btn-register {
+        background: #4361ee;
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        width: 100%;
+        cursor: pointer;
+    }
+
+        .btn-register:hover {
+            background: #3a0ca3;
+            transform: translateY(-2px);
+        }
+
+        .btn-register:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+    .email-display {
+        background: #f8f9fa;
+        padding: 10px;
+        border-radius: 6px;
+        margin-bottom: 1.5rem;
+        font-weight: 500;
+    }
+
+    .email-text {
+        font-weight: 600;
+        color: #4361ee;
+    }
+</style>
+
+<div class="register-container">
+    <h2>Profil Tamamlama</h2>
+
+    <form name="registerForm" method="post" enctype="multipart/form-data" action="/Auth/Index">
+        <div class="profile-image-wrapper">
+            <img id="profileImage" src="@TempData["UserImage"]" class="profile-image" alt="Profil şəkli">
+            <input type="hidden" name="GPhoto" value="@TempData["UserImage"]">
+        </div>
+
+        <label for="imageUpload" class="image-upload-label">
+            <i class="bi bi-cloud-arrow-up"></i> Şəkil Yüklə
+        </label>
+        <input type="file" id="imageUpload" name="Picture_r" class="image-upload-input" accept="image/*">
+
+        <div class="form-group">
+            <label for="fullName" class="form-label">Tam Adınız</label>
+            <input type="text" class="form-control" id="fullName" asp-for="FullName" value="@TempData["UserName"]" required>
+        </div>
+
+        <div class="email-display">
+            E-poçt ünvanınız: <span class="email-text">@TempData["UserEmail"]</span>
+            <input type="hidden" asp-for="Email" value="@TempData["UserEmail"]">
+        </div>
+
+        <div class="terms-check">
+            <input type="checkbox" id="agreeTerms" required>
+            <label for="agreeTerms">
+                <a href="/terms">İstifadə qaydaları</a> ilə razıyam
+            </label>
+        </div>
+
+        <button type="submit" class="btn-register" id="submitBtn" disabled>Qeydiyyatı Tamamla</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const profileImage = document.getElementById('profileImage');
+        const imageUpload = document.getElementById('imageUpload');
+        const fullName = document.getElementById('fullName');
+        const agreeTerms = document.getElementById('agreeTerms');
+        const submitBtn = document.getElementById('submitBtn');
+
+        profileImage.addEventListener('click', function () {
+            imageUpload.click();
+        });
+
+        imageUpload.addEventListener('change', function (event) {
+            if (event.target.files && event.target.files[0]) {
+                const file = event.target.files[0];
+
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('Şəkilin ölçüsü 5MB-dan çox ola bilməz!');
+                    imageUpload.value = "";
+                    return;
+                }
+
+                if (!['image/jpeg', 'image/png'].includes(file.type)) {
+                    alert('Yalnız JPEG və PNG fayl formatları qəbul edilir!');
+                    imageUpload.value = "";
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    profileImage.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+
+                validateForm();
+            }
+        });
+
+        function validateForm() {
+            const isNameValid = fullName.value.trim().length > 0;
+            const isTermsAccepted = agreeTerms.checked;
+
+            submitBtn.disabled = !(isNameValid && isTermsAccepted);
+        }
+
+        fullName.addEventListener('input', validateForm);
+        agreeTerms.addEventListener('change', validateForm);
+    });
+</script>

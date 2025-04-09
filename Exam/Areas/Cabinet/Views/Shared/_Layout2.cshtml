@@ -1,0 +1,179 @@
+﻿@{
+    // Get the serialized user from session
+    var userId = Context.Session.GetString("User");
+    var username = "İstifadəçi"; // Default value
+    var userImage = "https://example.com/default-avatar.png"; // Default image URL
+
+    if (userId != null)
+    {
+        // Deserialize the JSON to User object
+        var person = _context.User.where(x=>x.id == userId);
+        if (person != null)
+        {
+            username = person.FullName;
+            userImage = person.Picture ?? userImage; // Use default if PictureUrl is null
+        }
+    }
+
+    var userInitial = username.Substring(0, 1).ToUpper();
+    var notificationCount = Context.Session.GetInt32("NotificationCount") ?? 0;
+}
+
+<!DOCTYPE html>
+<html lang="az" data-theme="light">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - İmtahan Portalı</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/cabinet/css/StyleSheet.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <div class="exam-portal">
+        <!-- Glassmorphism Sidebar -->
+        <aside class="portal-sidebar">
+            <div class="portal-brand">
+                <div class="logo-icon">
+                    <i class="bi bi-journal-bookmark-fill"></i>
+                </div>
+                <h1>İmtahan Portalı</h1>
+            </div>
+
+            <!-- Animated Navigation -->
+            <nav class="portal-nav">
+                <div class="nav-highlight"></div>
+                <ul>
+                    <li class="@(ViewContext.RouteData.Values["Page"]?.ToString() == "/Index" ? "active" : "")">
+                        <a asp-area="Cabinet" asp-controller="Dashboard" asp-action="Index">
+                            <i class="bi bi-house"></i>
+                            <span>Ana Səhifə</span>
+                        </a>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Page"]?.ToString() == "/Imtahanlar" ? "active" : "")">
+                        <a asp-area="Cabinet" asp-controller="Questions" asp-action="Index">
+                            <i class="bi bi-journal-text"></i>
+                            <span>İmtahanlar</span>
+                        </a>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Page"]?.ToString() == "/Neticeleer" ? "active" : "")">
+                        <a asp-area="Cabinet" asp-controller="Results" asp-action="Index">
+                            <i class="bi bi-clipboard-data"></i>
+                            <span>Nəticələr</span>
+                        </a>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Page"]?.ToString() == "/Tarifler" ? "active" : "")">
+                        <a asp-area="Cabinet" asp-controller="Tarifs" asp-action="Index">
+                            <i class="bi bi-credit-card"></i>
+                            <span>Tariflər</span>
+                        </a>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Page"]?.ToString() == "/Account" ? "active" : "")">
+                        <a asp-area="Cabinet" asp-controller="Account" asp-action="Index">
+                            <i class="bi bi-person"></i>
+                            <span>Profil</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- User Profile Card -->
+            <div class="user-profile-card">
+                <div class="avatar-circle" style="overflow:hidden">
+                    <img src="@userImage" style="width:inherit" />
+                </div>
+                <div class="user-details">
+                    <h3>@username</h3>
+                    <p>Tələbə</p>
+                </div>
+                <form asp-area="" asp-controller="Auth" asp-action="Logout" method="post">
+                    <button type="submit" class="btn btn-logout">
+                        <i class="bi bi-box-arrow-right"></i>
+                    </button>
+                </form>
+
+
+            </div>
+        </aside>
+
+        <!-- Main Content with Neumorphism Design -->
+        <main class="portal-content">
+            <!-- Header with Dynamic Glass Effect -->
+            <header class="content-header">
+                <div class="header-content">
+                    <h2><i class="bi @ViewData["PageIcon"]"></i> @ViewData["PageTitle"] Dashboard</h2>
+                    <div class="header-actions">
+                        <a asp-area="Cabinet" asp-controller="Notification" asp-action="Index" class="notification-bubble">
+                            <i class="bi bi-bell"></i>
+                            @if (notificationCount > 0)
+                            {
+                                <span class="badge">@notificationCount</span>
+                            }
+                        </a>
+                        <button class="theme-toggle">
+                            <i class="bi bi-moon"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="header-progress">
+                    <div class="progress-bar" style="width: @(ViewData["Progress"] ?? "0")%"></div>
+                </div>
+            </header>
+
+            <!-- Animated Content Area -->
+            <div class="content-animation">
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="fab">
+        <button class="fab-btn">
+            <i class="bi bi-question-circle"></i>
+        </button>
+    </div>
+    @await RenderSectionAsync("Container", required: false)
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        // Animate navigation highlight
+        $('.portal-nav a').hover(function() {
+            const position = $(this).parent().position().top;
+            const height = $(this).outerHeight();
+            $('.nav-highlight').css({
+                'top': position,
+                'height': height
+            });
+        });
+
+        // Theme toggle
+        $('.theme-toggle').click(function() {
+            $('html').attr('data-theme',
+                $('html').attr('data-theme') === 'light' ? 'dark' : 'light');
+            $(this).find('i').toggleClass('bi-moon bi-sun');
+        });
+                // Submenu toggle functionality
+        $('.has-submenu > a').click(function(e) {
+            if ($(this).parent().hasClass('has-submenu')) {
+                e.preventDefault();
+                $(this).parent().toggleClass('active');
+                $(this).find('.submenu-toggle').toggleClass('bi-chevron-down bi-chevron-up');
+            }
+        });
+
+        // Close submenus when clicking elsewhere
+        $(document).click(function(e) {
+            if (!$(e.target).closest('.has-submenu').length) {
+                $('.has-submenu').removeClass('active');
+                $('.submenu-toggle').removeClass('bi-chevron-up').addClass('bi-chevron-down');
+            }
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

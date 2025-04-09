@@ -1,0 +1,126 @@
+/* ===== Base Styles ===== */
+:root {
+    --primary: #3b82f6;
+    --primary-light: #93c5fd;
+    --text: #1f2937;
+    --text-light: #6b7280;
+    --bg: #ffffff;
+    --card-bg: #f9fafb;
+    --border: #e5e7eb;
+}
+
+.staff-section {
+    background-color: var(--bg);
+    padding: 4rem 0;
+    font-family: 'Inter', sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* ===== Section Header ===== */
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+}
+
+.section-subtitle {
+    color: var(--text-light);
+    font-size: 1rem;
+}
+
+/* ===== Staff Grid ===== */
+.staff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.staff-card {
+    background-color: var(--card-bg);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .staff-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+/* ===== Staff Image ===== */
+.staff-image {
+    height: 250px;
+    overflow: hidden;
+}
+
+    .staff-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+.staff-card:hover .staff-image img {
+    transform: scale(1.05);
+}
+
+/* ===== Staff Info ===== */
+.staff-info {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.staff-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+}
+
+.staff-position {
+    color: var(--text-light);
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+
+/* ===== Social Icons ===== */
+.staff-social {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+    .staff-social a {
+        color: var(--text-light);
+        font-size: 1rem;
+        transition: color 0.3s ease;
+    }
+
+        .staff-social a:hover {
+            color: var(--primary);
+        }
+
+/* ===== Responsive Design ===== */
+@media (max-width: 640px) {
+    .staff-grid {
+        grid-template-columns: 1fr;
+        max-width: 350px;
+        margin: 0 auto;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+}

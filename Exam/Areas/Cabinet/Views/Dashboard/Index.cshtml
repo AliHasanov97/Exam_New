@@ -1,0 +1,135 @@
+﻿<div class="dashboard-section quick-actions-section">
+    <h3 class="section-title"><i class="bi bi-lightning"></i> Sürətli Əməliyyatlar</h3>
+
+    <div class="quick-actions-grid">
+        <a asp-area="Cabinet" asp-controller="Questions" asp-action="Index" class="quick-action">
+            <div class="action-icon primary">
+                <i class="bi bi-pencil-square"></i>
+            </div>
+            <span>İmtahana başla</span>
+        </a>
+
+        <a asp-area="Cabinet" asp-controller="Results" asp-action="Index" class="quick-action">
+            <div class="action-icon success">
+                <i class="bi bi-graph-up"></i>
+            </div>
+            <span>Nəticələri yoxla</span>
+        </a>
+
+        <a asp-area="Cabinet" asp-controller="Account" asp-action="Index" class="quick-action">
+            <div class="action-icon info">
+                <i class="bi bi-person"></i>
+            </div>
+            <span>Profilə bax</span>
+        </a>
+
+        <a href="/tarifler" class="quick-action">
+            <div class="action-icon warning">
+                <i class="bi bi-rocket"></i>
+            </div>
+            <span>Tarifləri yenilə</span>
+        </a>
+    </div>
+</div>
+
+<div class="dashboard-section">
+    <h3 class="section-title"><i class="bi bi-graph-up"></i> Şəxsi Statistika</h3>
+    <div class="stats-grid">
+        <!-- İmtahan Statistikası -->
+        <div class="stat-card primary">
+            <div class="stat-icon">
+                <i class="bi bi-journal-check"></i>
+            </div>
+            <div class="stat-info">
+                <h4>Tamamlanmış İmtahanlar</h4>
+                <p class="stat-value">12</p>
+                <p class="stat-change positive">+2 keçən aya nisbətən</p>
+            </div>
+        </div>
+
+        <!-- Ortalama Nəticə -->
+        <div class="stat-card success">
+            <div class="stat-icon">
+                <i class="bi bi-award"></i>
+            </div>
+            <div class="stat-info">
+                <h4>Ortalama Nəticə</h4>
+                <p class="stat-value">87%</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 87%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aktiv İmtahanlar -->
+        <div class="stat-card warning">
+            <div class="stat-icon">
+                <i class="bi bi-clock-history"></i>
+            </div>
+            <div class="stat-info">
+                <h4>Aktiv İmtahanlar</h4>
+                <p class="stat-value">3</p>
+                <a href="/imtahanlar" class="stat-link">Hamısına bax →</a>
+            </div>
+        </div>
+
+        <!-- Son Test Nəticəsi -->
+        <div class="stat-card info">
+            <div class="stat-icon">
+                <i class="bi bi-clipboard-data"></i>
+            </div>
+            <div class="stat-info">
+                <h4>Son Test Nəticəsi</h4>
+                <p class="stat-value">92%</p>
+                <p class="stat-meta">Riyaziyyat - 15 May 2023</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-section">
+    <h3 class="section-title"><i class="bi bi-calendar2-week"></i> Yaxınlaşan İmtahanlar</h3>
+
+    <div class="upcoming-exams">
+        <!-- İmtahan Kartı 1 -->
+        <div class="exam-card">
+            <div class="exam-header">
+                <span class="exam-badge primary">Yeni</span>
+                <h4>Fizika - Termodinamika</h4>
+            </div>
+            <div class="exam-meta">
+                <span><i class="bi bi-calendar"></i> 15 İyun 2023</span>
+                <span><i class="bi bi-clock"></i> 60 dəqiqə</span>
+            </div>
+            <div class="exam-footer">
+                <a href="#" class="btn btn-outline">Ətraflı</a>
+                <div class="days-left">
+                    <i class="bi bi-alarm"></i>
+                    <span>3 gün qalıb</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- İmtahan Kartı 2 -->
+        <div class="exam-card">
+            <div class="exam-header">
+                <h4>İngilis Dili - Grammar</h4>
+            </div>
+            <div class="exam-meta">
+                <span><i class="bi bi-calendar"></i> 20 İyun 2023</span>
+                <span><i class="bi bi-clock"></i> 45 dəqiqə</span>
+            </div>
+            <div class="exam-footer">
+                <a href="#" class="btn btn-outline">Ətraflı</a>
+                <div class="days-left">
+                    <i class="bi bi-alarm"></i>
+                    <span>8 gün qalıb</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-footer">
+        <a href="/imtahanlar" class="view-all">Bütün imtahanlara bax →</a>
+    </div>
+</div>

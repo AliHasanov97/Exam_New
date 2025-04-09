@@ -1,0 +1,583 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İmtahan - Riyaziyyat</title>
+    <style>
+        :root {
+            --primary: #6C5CE7;
+            --primary-light: #A29BFE;
+            --secondary: #00B894;
+            --danger: #D63031;
+            --warning: #FDCB6E;
+            --dark: #2D3436;
+            --light: #F5F6FA;
+            --border: #DFE6E9;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            display: flex;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 300px;
+            background: white;
+            border-right: 1px solid var(--border);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .student-profile {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .student-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-light);
+            margin: 0 auto 15px;
+        }
+
+        .student-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .student-id {
+            color: var(--dark);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        .exam-status {
+            background: rgba(108, 92, 231, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .status-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+            .status-title i {
+                font-size: 1.2rem;
+            }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .status-value {
+            font-weight: 600;
+        }
+
+        .timer-container {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .timer-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .timer {
+            font-size: 1.8rem;
+            font-weight: 700;
+            font-family: monospace;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .submit-btn:hover {
+                background: #C23636;
+                transform: translateY(-2px);
+            }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            margin-left: 300px;
+            width: calc(100% - 300px);
+            overflow-y: auto;
+            height: 100vh;
+        }
+
+        .exam-header {
+            margin-bottom: 30px;
+        }
+
+        .exam-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .exam-description {
+            color: var(--dark);
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        /* Questions Styles */
+        .question-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            border: 1px solid var(--border);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .question-flag {
+            color: var(--danger);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 15px 20px;
+            border-radius: 10px;
+            background: var(--light);
+            border: 2px solid var(--border);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+            .option:hover {
+                border-color: var(--primary-light);
+                background: rgba(108, 92, 231, 0.05);
+            }
+
+            .option.selected {
+                background: rgba(108, 92, 231, 0.1);
+                border-color: var(--primary);
+            }
+
+        .option-letter {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: 700;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .option.selected .option-letter {
+            background: var(--primary);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Container -->
+    <div class="sidebar">
+        <div class="student-profile">
+            <img src="https://lh3.googleusercontent.com/a/ACg8ocKZw9JApUFT99ELwNaIBNnbAGB5jR-Xy0kaZihHsAqqbj66DC38=s400-c"
+                 alt="Tələbə" class="student-avatar">
+            <h3 class="student-name">Əli Hüseynov</h3>
+            <p class="student-id">Tələbə ID: ST20230045</p>
+        </div>
+
+        <div class="exam-status">
+            <div class="status-title">
+                <span>📊</span>
+                <span>İmtahan Statistikası</span>
+            </div>
+            <div class="status-item">
+                <span>Ümumi suallar:</span>
+                <span class="status-value">5</span>
+            </div>
+            <div class="status-item">
+                <span>Cavablandırılıb:</span>
+                <span class="status-value" id="answered-count">0</span>
+            </div>
+            <div class="status-item">
+                <span>Qalıb:</span>
+                <span class="status-value" id="remaining-count">5</span>
+            </div>
+            <div class="status-item">
+                <span>İşarələnib:</span>
+                <span class="status-value" id="flagged-count">0</span>
+            </div>
+        </div>
+
+        <div class="timer-container">
+            <div class="timer-label">Qalan vaxt</div>
+            <div class="timer" id="exam-timer">01:30:00</div>
+        </div>
+
+        <button class="submit-btn" id="submit-exam">
+            İmtahanı Yekunla
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="exam-header">
+            <h1 class="exam-title">Riyaziyyat - Final İmtahanı</h1>
+            <p class="exam-description">Hər suala diqqətlə cavab verin. Birdən çox cavab seçimi yoxdur.</p>
+
+            <div class="progress-container">
+                <div class="progress-text">
+                    <span>İrəliləyiş</span>
+                    <span id="progress-text">0/5 (0%)</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 1 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-number">Sual 1</div>
+                <div class="question-flag">🏴</div>
+            </div>
+            <div class="question-text">
+                Düzbucaqlı üçbucağın katetləri 6 sm və 8 sm-dir. Hipotenuzun uzunluğu neçə sm-dir?
+            </div>
+            <div class="options-grid">
+                <div class="option">
+                    <div class="option-letter">A</div>
+                    <div class="option-text">10 sm</div>
+                </div>
+                <div class="option">
+                    <div class="option-letter">B</div>
+                    <div class="option-text">12 sm</div>
+                </div>
+                <div class="option">
+                    <div class="option-letter">C</div>
+                    <div class="option-text">14 sm</div>
+                </div>
+                <div class="option">
+                    <div class="option-letter">D</div>
+                    <div class="option-text">16 sm</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-number">Sual 2</div>
+                <div class="question-flag">🏴</div>
+            </div>
+            <div class="question-text">
+                30° bucağın radianla ifadəsi neçədir?
+            </div>
+            <div class="options-grid">
+                <div class="option">
+                    <div class="option-letter">A</div>
+                    <div class="option-text">π/3</div>
+                </div>
+                <div class="option">
+                    <div class="option-letter">B</div>
+                    <div class="option-text">π/6</div>
+                </div>
+                <div class="option">
+                    <div class="option-letter">C</div>
+                    <div class="option-text">π/4</div>
+                </div>
+                <div class="option">
+                    <div class="option-letter">D</div>
+                    <div class="option-text">π/2</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-number">Sual 3</div>
+                <div class="question-flag">🏴</div>
+            </div>
+            <div class="question-text">
+                2x² - 8x + 6 = 0 tənliyinin həllər çoxluğu hansıdır?
+            </div>
+            <div class="options-grid">
+                <div class="option">
+                    <div class="option-letter">A</div>
+                    <div class="option-text">{1, 2}</div>
+                </div>
+                <div class="option">
+                    <div class="option-letter">B</div>
+                    <div class="option-text">{2, 3}</div>
+                </div>
+                <div class="option">
+                    <div class="option-letter">C</div>
+                    <div class="option-text">{1, 3}</div>
+                </div>
+                <div class="option">
+                    <div class="option-letter">D</div>
+                    <div class="option-text">{3, 4}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-number">Sual 4</div>
+                <div class="question-flag">🏴</div>
+            </div>
+            <div class="question-text">
+                Hansı funksiya tək funksiyadır?
+            </div>
+            <div class="options-grid">
+                <div class="option">
+                    <div class="option-letter">A</div>
+                    <div class="option-text">f(x) = x²</div>
+                </div>
+                <div class="option">
+                    <div class="option-letter">B</div>
+                    <div class="option-text">f(x) = cos(x)</div>
+                </div>
+                <div class="option">
+                    <div class="option-letter">C</div>
+                    <div class="option-text">f(x) = x³</div>
+                </div>
+                <div class="option">
+                    <div class="option-letter">D</div>
+                    <div class="option-text">f(x) = |x|</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-number">Sual 5</div>
+                <div class="question-flag">🏴</div>
+            </div>
+            <div class="question-text">
+                Ədədi ortası 8 olan 5 ədədə bir ədəd daha əlavə edildikdə yeni orta 9 olur. Əlavə edilən ədəd neçədir?
+            </div>
+            <div class="options-grid">
+                <div class="option">
+                    <div class="option-letter">A</div>
+                    <div class="option-text">12</div>
+                </div>
+                <div class="option">
+                    <div class="option-letter">B</div>
+                    <div class="option-text">13</div>
+                </div>
+                <div class="option">
+                    <div class="option-letter">C</div>
+                    <div class="option-text">14</div>
+                </div>
+                <div class="option">
+                    <div class="option-letter">D</div>
+                    <div class="option-text">15</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Timer functionality
+        function startTimer(duration, display) {
+            let timer = duration, hours, minutes, seconds;
+            const interval = setInterval(function () {
+                hours = parseInt(timer / 3600, 10);
+                minutes = parseInt((timer % 3600) / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                hours = hours < 10 ? "0" + hours : hours;
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = hours + ":" + minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(interval);
+                    alert("Vaxt bitdi! İmtahan avtomatik olaraq yekunlaşdırılacaq.");
+                    window.location.href = "results.html";
+                }
+            }, 1000);
+        }
+
+        // Initialize when window loads
+        window.onload = function () {
+            const ninetyMinutes = 60 * 90; // 90 minutes in seconds
+            const display = document.querySelector('#exam-timer');
+            startTimer(ninetyMinutes, display);
+
+            // Initialize progress
+            updateProgress();
+        };
+
+        // Option selection
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from siblings in this question only
+                const question = this.closest('.question-card');
+                question.querySelectorAll('.option').forEach(sibling => {
+                    sibling.classList.remove('selected');
+                });
+
+                // Add selected class to clicked item
+                this.classList.add('selected');
+
+                // Update progress
+                updateProgress();
+            });
+        });
+
+        // Flag question
+        document.querySelectorAll('.question-flag').forEach(flag => {
+            flag.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.textContent = this.textContent === '🏴' ? '🚩' : '🏴';
+                updateFlaggedCount();
+            });
+        });
+
+        // Update progress
+        function updateProgress() {
+            const answered = document.querySelectorAll('.option.selected').length;
+            const total = document.querySelectorAll('.question-card').length;
+            const remaining = total - answered;
+            const percentage = Math.round((answered / total) * 100);
+
+            // Update progress bar
+            document.getElementById('progress-fill').style.width = `${percentage}%`;
+            document.getElementById('progress-text').textContent =
+                `${answered}/${total} (${percentage}%)`;
+
+            // Update sidebar counts
+            document.getElementById('answered-count').textContent = answered;
+            document.getElementById('remaining-count').textContent = remaining;
+        }
+
+        // Update flagged count
+        function updateFlaggedCount() {
+            const flagged = document.querySelectorAll('.question-flag[data-flagged="true"]').length;
+            document.getElementById('flagged-count').textContent = flagged;
+        }
+
+        // Submit exam
+        document.getElementById('submit-exam').addEventListener('click', function() {
+            if(confirm("İmtahanı tamamlamaq istədiyinizə əminsiniz?")) {
+                // Redirect to results page
+                window.location.href = "results.html";
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,387 @@
+﻿
+@{
+    ViewData["Title"] = "Test";
+}
+<style>
+    .samples-header {
+        background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+        color: white;
+        padding: 6rem 0 5rem;
+        margin-bottom: 3rem;
+        position: relative;
+        overflow: hidden;
+        margin-top:15px;
+        border-radius:12px;
+    }
+
+        .samples-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 25%), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 0%, transparent 25%);
+        }
+
+        .samples-header .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .samples-header h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+            .samples-header h1 i {
+                font-size: 2.8rem;
+                vertical-align: middle;
+                margin-right: 0.8rem;
+                color: #f72585;
+                text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            }
+
+        .samples-header .lead {
+            font-size: 1.4rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        /* Dekorativ elementlər */
+        .samples-header .decor {
+            position: absolute;
+            opacity: 0.1;
+        }
+
+        .samples-header .decor-1 {
+            top: 20%;
+            left: 5%;
+            font-size: 8rem;
+            transform: rotate(-15deg);
+        }
+
+        .samples-header .decor-2 {
+            bottom: 10%;
+            right: 5%;
+            font-size: 10rem;
+            transform: rotate(25deg);
+        }
+
+    .sample-card {
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        margin-bottom: 25px;
+        height: 100%;
+    }
+
+        .sample-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+
+        .sample-card .card-header {
+            background-color: white;
+            color: var(--dark-color);
+            font-weight: 600;
+            padding: 1.2rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+        }
+
+            .sample-card .card-header i {
+                font-size: 1.5rem;
+                margin-right: 10px;
+                color: var(--primary-color);
+            }
+
+    .subject-badge {
+        background: rgba(67, 97, 238, 0.1);
+        color: var(--primary-color);
+        padding: 5px 15px;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+
+    .btn-sample {
+        background: var(--primary-color);
+        color: white;
+        border-radius: 50px;
+        padding: 8px 20px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+        .btn-sample:hover {
+            background: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+    .filter-buttons .btn {
+        margin-right: 10px;
+        margin-bottom: 10px;
+        border-radius: 50px;
+        padding: 8px 20px;
+    }
+
+    .search-box {
+        position: relative;
+        max-width: 400px;
+    }
+
+        .search-box input {
+            padding-left: 40px;
+            border-radius: 50px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+        }
+
+    .hidden {
+        display: none !important;
+    }
+
+</style>
+
+<div class="samples-header">
+    <!-- Dekorativ elementlər -->
+    <div class="decor decor-1">
+        <i class="bi bi-journal-check"></i>
+    </div>
+    <div class="decor decor-2">
+        <i class="bi bi-patch-check"></i>
+    </div>
+
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold mb-3">
+            <i class="bi bi-file-earmark-text"></i> Test Nümunələri
+        </h1>
+        <p class="lead mb-0">
+            Hazırlıq üçün pulsuz test nümunələrimizlə öz biliklərinizi yoxlayın və
+            real imtahan şəraitinə hazır olun
+        </p>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="container mb-5">
+    <!-- Search and Filter Section -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="search-box">
+                <i class="bi bi-search"></i>
+                <input type="text" class="form-control" id="searchInput" placeholder="Fənn, sinif və ya açar söz axtar...">
+            </div>
+        </div>
+        <div class="col-md-6 text-md-end">
+            <div class="filter-buttons">
+                <button class="btn btn-outline-primary filter-btn active" data-filter="all">Hamısı</button>
+                <button class="btn btn-outline-primary filter-btn" data-filter="9">9-cu sinif</button>
+                <button class="btn btn-outline-primary filter-btn" data-filter="10">10-cu sinif</button>
+                <button class="btn btn-outline-primary filter-btn" data-filter="11">11-ci sinif</button>
+                <button class="btn btn-outline-primary filter-btn" data-filter="abituriyent">Abituriyentlər</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Samples Grid -->
+    <div class="row" id="samplesContainer">
+        <!-- Sample 1 -->
+        <div class="col-lg-4 col-md-6 mb-3 sample-item" data-grade="9" data-subject="riyaziyyat" data-search="riyaziyyat cəbr 9-cu sinif kvadrat tənliklər çoxhədlilər">
+            <div class="sample-card card">
+                <div class="card-header">
+                    <i class="bi bi-calculator"></i>
+                    Riyaziyyat
+                </div>
+                <div class="card-body">
+                    <span class="subject-badge">9-cu sinif</span>
+                    <h5 class="card-title">Cəbr test nümunəsi</h5>
+                    <p class="card-text">Kvadrat tənliklər və çoxhədlilər üzrə 15 suallıq nümunəvi test. Hər sual üçün ətraflı izahlar.</p>
+
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        <span class="text-muted"><i class="bi bi-clock me-1"></i> 25 dəq</span>
+                        <a href="#" class="btn btn-sample">
+                            <i class="bi bi-arrow-right me-1"></i>Testə başla
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sample 2 -->
+        <div class="col-lg-4 col-md-6 mb-3 sample-item" data-grade="abituriyent" data-subject="azərbaycan-dili" data-search="azərbaycan dili qrammatika sintaksis ədəbiyyat abituriyent">
+            <div class="sample-card card">
+                <div class="card-header">
+                    <i class="bi bi-book"></i>
+                    Azərbaycan dili
+                </div>
+                <div class="card-body">
+                    <span class="subject-badge">Abituriyentlər</span>
+                    <h5 class="card-title">Dilçilik test nümunəsi</h5>
+                    <p class="card-text">Qrammatika, sintaksis və ədəbiyyat üzrə 20 suallıq imtahan nümunəsi. Ətraflı izahlarla.</p>
+
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        <span class="text-muted"><i class="bi bi-clock me-1"></i> 30 dəq</span>
+                        <a href="#" class="btn btn-sample">
+                            <i class="bi bi-arrow-right me-1"></i>Testə başla
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sample 3 -->
+        <div class="col-lg-4 col-md-6 mb-3 sample-item" data-grade="11" data-subject="fizika" data-search="fizika elektromaqnetizm elektrik sahəsi maqnit sahəsi 11-ci sinif">
+            <div class="sample-card card">
+                <div class="card-header">
+                    <i class="bi bi-atom"></i>
+                    Fizika
+                </div>
+                <div class="card-body">
+                    <span class="subject-badge">11-ci sinif</span>
+                    <h5 class="card-title">Elektromaqnetizm test nümunəsi</h5>
+                    <p class="card-text">Elektrik sahəsi, maqnit sahəsi və elektromaqnit dalğalar üzrə 18 suallıq test. Həllərlə birlikdə.</p>
+
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        <span class="text-muted"><i class="bi bi-clock me-1"></i> 35 dəq</span>
+                        <a href="#" class="btn btn-sample">
+                            <i class="bi bi-arrow-right me-1"></i>Testə başla
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sample 4 -->
+        <div class="col-lg-4 col-md-6 mb-3 sample-item" data-grade="10" data-subject="kimya" data-search="kimya üzvi kimya karbon birləşmələri 10-cu sinif">
+            <div class="sample-card card">
+                <div class="card-header">
+                    <i class="bi bi-flask"></i>
+                    Kimya
+                </div>
+                <div class="card-body">
+                    <span class="subject-badge">10-cu sinif</span>
+                    <h5 class="card-title">Üzvi kimya test nümunəsi</h5>
+                    <p class="card-text">Karbon birləşmələri və üzvi reaksiyalar üzrə 12 suallıq nümunəvi test. Ətraflı izahlar.</p>
+
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        <span class="text-muted"><i class="bi bi-clock me-1"></i> 20 dəq</span>
+                        <a href="#" class="btn btn-sample">
+                            <i class="bi bi-arrow-right me-1"></i>Testə başla
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sample 5 -->
+        <div class="col-lg-4 col-md-6 mb-3 sample-item" data-grade="9" data-subject="tarix" data-search="tarix azərbaycan tarixi orta əsrlər 9-cu sinif">
+            <div class="sample-card card">
+                <div class="card-header">
+                    <i class="bi bi-globe"></i>
+                    Tarix
+                </div>
+                <div class="card-body">
+                    <span class="subject-badge">9-cu sinif</span>
+                    <h5 class="card-title">Azərbaycan tarixi test nümunəsi</h5>
+                    <p class="card-text">Orta əsrlər dövrü Azərbaycan tarixi üzrə 15 suallıq test. Əhəmiyyətli tarixi hadisələr.</p>
+
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        <span class="text-muted"><i class="bi bi-clock me-1"></i> 25 dəq</span>
+                        <a href="#" class="btn btn-sample">
+                            <i class="bi bi-arrow-right me-1"></i>Testə başla
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sample 6 -->
+        <div class="col-lg-4 col-md-6 mb-3 sample-item" data-grade="abituriyent" data-subject="ingilis-dili" data-search="ingilis dili qrammatika zamanlar modallar abituriyent">
+            <div class="sample-card card">
+                <div class="card-header">
+                    <i class="bi bi-translate"></i>
+                    İngilis dili
+                </div>
+                <div class="card-body">
+                    <span class="subject-badge">Abituriyentlər</span>
+                    <h5 class="card-title">Qrammatika test nümunəsi</h5>
+                    <p class="card-text">Zamanlar, modallar və söz düzəltmə üzrə 25 suallıq test. Ətraflı izahlarla birlikdə.</p>
+
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        <span class="text-muted"><i class="bi bi-clock me-1"></i> 40 dəq</span>
+                        <a href="#" class="btn btn-sample">
+                            <i class="bi bi-arrow-right me-1"></i>Testə başla
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- More Samples Button -->
+    <div class="text-center mt-4">
+        <button class="btn btn-outline-primary px-4 py-2">
+            <i class="bi bi-arrow-down me-2"></i>Daha çox nümunə yüklə
+        </button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const sampleItems = document.querySelectorAll('.sample-item');
+
+        // Filtrləmə funksiyası
+        function filterItems() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+
+            sampleItems.forEach(item => {
+                const grade = item.dataset.grade;
+                const searchText = item.dataset.search.toLowerCase();
+
+                const matchesSearch = searchText.includes(searchTerm);
+                const matchesFilter = activeFilter === 'all' || grade === activeFilter;
+
+                if (matchesSearch && matchesFilter) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+        }
+
+        // Axtarış inputu üçün event listener
+        searchInput.addEventListener('input', filterItems);
+
+        // Filtr düymələri üçün event listener
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                filterItems();
+            });
+        });
+    });
+</script>

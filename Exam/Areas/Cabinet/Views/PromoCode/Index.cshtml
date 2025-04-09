@@ -1,0 +1,248 @@
+﻿@{
+    ViewData["Title"] = "Promokodlar";
+    ViewData["PageTitle"] = "Promokodlar";
+    ViewData["PageIcon"] = "bi bi-percent";
+}
+
+<div class="promo-page-container">
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Promokod Tətbiq Etmə Bölməsi -->
+            <div class="apply-promo-section shadow-lg p-4 rounded mb-4">
+                <h4><i class="bi bi-percent"></i> Promokod Tətbiq Et</h4>
+                <div class="row mt-3">
+                    <div class="col-md-8">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control form-control-lg" id="userPromoCode" placeholder="Promokodu daxil edin">
+                            <button class="btn btn-primary" type="button" id="applyUserPromo">
+                                <i class="bi bi-check-circle"></i> Tətbiq et
+                            </button>
+                        </div>
+                        <div id="promoResultMessage" class="alert" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aktiv Promokodlar -->
+            <div class="active-promos-section shadow-lg p-4 rounded">
+                <h4><i class="bi bi-tags"></i> Aktiv Promokodlarım</h4>
+                <div class="table-responsive mt-3">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Promokod</th>
+                                <th>Xüsusiyyət</th>
+                                <th>Etibarlıdır</th>
+                                <th>Qalıq</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="badge bg-primary">WELCOME10</span></td>
+                                <td>10% endirim</td>
+                                <td>31.12.2023</td>
+                                <td>-</td>
+                                <td><span class="badge bg-success">Aktiv</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-primary">FREE5TEST</span></td>
+                                <td>5 pulsuz imtahan</td>
+                                <td>31.12.2023</td>
+                                <td>3/5</td>
+                                <td><span class="badge bg-success">Aktiv</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-primary">UNLIMITED</span></td>
+                                <td>1 həftə limitsiz imtahan</td>
+                                <td>15.10.2023</td>
+                                <td>4 gün</td>
+                                <td><span class="badge bg-success">Aktiv</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-secondary">NEWYEAR20</span></td>
+                                <td>20% endirim</td>
+                                <td>31.01.2023</td>
+                                <td>-</td>
+                                <td><span class="badge bg-secondary">Bitmiş</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <!-- Promokod Qaydaları -->
+            <div class="promo-rules-section shadow-lg p-4 rounded">
+                <h4><i class="bi bi-info-circle"></i> Promokod Qaydaları</h4>
+                <ul class="list-group list-group-flush mt-3">
+                    <li class="list-group-item d-flex align-items-center">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        <span>Endirim promokodları yalnız balans artırma zamanı tətbiq edilir</span>
+                    </li>
+                    <li class="list-group-item d-flex align-items-center">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        <span>Pulsuz imtahan promokodları avtomatik aktiv olur</span>
+                    </li>
+                    <li class="list-group-item d-flex align-items-center">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        <span>Hər bir promokod yalnız bir dəfə istifadə edilə bilər</span>
+                    </li>
+                    <li class="list-group-item d-flex align-items-center">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        <span>Müxtəlif növ promokodları birlikdə istifadə edə bilməzsiniz</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Xüsusi Təkliflər -->
+            <div class="special-offers-section shadow-lg p-4 rounded mt-4">
+                <h4><i class="bi bi-gift"></i> Xüsusi Təkliflər</h4>
+                <div class="offer-cards mt-3">
+                    <div class="offer-card mb-3 p-3 border rounded">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="mb-0">Yeni İstifadəçi Endirimi</h5>
+                            <span class="badge bg-primary">WELCOME10</span>
+                        </div>
+                        <p class="mb-2 text-muted">İlk balans artırımınıza 10% endirim</p>
+                        <div class="d-flex justify-content-between">
+                            <small class="text-muted">Etibarlıdır: 31.12.2023</small>
+                            <small><strong>Endirim</strong></small>
+                        </div>
+                    </div>
+
+                    <div class="offer-card mb-3 p-3 border rounded">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="mb-0">Pulsuz İmtahanlar</h5>
+                            <span class="badge bg-primary">FREE5TEST</span>
+                        </div>
+                        <p class="mb-2 text-muted">Gündə 5 pulsuz imtahan hüququ</p>
+                        <div class="d-flex justify-content-between">
+                            <small class="text-muted">Etibarlıdır: 31.12.2023</small>
+                            <small><strong>Limit: 5/gün</strong></small>
+                        </div>
+                    </div>
+
+                    <div class="offer-card mb-3 p-3 border rounded">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="mb-0">Limitsiz Həftə</h5>
+                            <span class="badge bg-primary">UNLIMITED</span>
+                        </div>
+                        <p class="mb-2 text-muted">1 həftə müddətinə limitsiz imtahan</p>
+                        <div class="d-flex justify-content-between">
+                            <small class="text-muted">Etibarlıdır: 15.10.2023</small>
+                            <small><strong>7 gün</strong></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .promo-page-container {
+            padding: 20px;
+        }
+
+        .apply-promo-section, .active-promos-section,
+        .promo-rules-section, .special-offers-section {
+            background: white;
+            border-radius: 10px;
+        }
+
+        #userPromoCode {
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .offer-card {
+            transition: all 0.3s ease;
+            background: rgba(var(--primary-rgb), 0.05);
+        }
+
+            .offer-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                background: rgba(var(--primary-rgb), 0.1);
+            }
+
+        .list-group-item {
+            padding: 12px 15px;
+            border-left: none;
+            border-right: none;
+        }
+
+        .table th {
+            font-weight: 500;
+            color: #555;
+        }
+
+        .badge.bg-primary {
+            font-size: 0.8em;
+        }
+
+        .offer-card h5 {
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Promokod tətbiq etmə funksiyası
+            document.getElementById('applyUserPromo').addEventListener('click', function() {
+                const promoCode = document.getElementById('userPromoCode').value.trim().toUpperCase();
+                const resultMessage = document.getElementById('promoResultMessage');
+
+                // Nümunə promokod yoxlaması
+                if (promoCode === 'WELCOME10') {
+                    showPromoResult('success',
+                        '10% endirim promokodu uğurla tətbiq edildi! Balans artırma zamanı endirim avtomatik tətbiq olunacaq.');
+                }
+                else if (promoCode === 'FREE5TEST') {
+                    showPromoResult('success',
+                        'Uğurlu! Sizə gündə 5 pulsuz imtahan hüququ verildi. İndi imtahan verməyə başlaya bilərsiniz.');
+                }
+                else if (promoCode === 'UNLIMITED') {
+                    showPromoResult('success',
+                        'Təbriklər! 1 həftə müddətinə limitsiz imtahan hüququ qazandınız. Hüququnuz 7 gün ərzində keçərlidir.');
+                }
+                else if (promoCode) {
+                    showPromoResult('danger',
+                        'Daxil etdiyiniz promokod yanlışdır, vaxtı bitmişdir və ya artıq istifadə edilib.');
+                } else {
+                    resultMessage.style.display = 'none';
+                }
+            });
+
+            function showPromoResult(type, message) {
+                const resultMessage = document.getElementById('promoResultMessage');
+                resultMessage.className = `alert alert-${type}`;
+                resultMessage.innerHTML = `
+                    <div class="d-flex align-items-center">
+                        <i class="bi ${type === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-circle-fill'} me-2 fs-4"></i>
+                        <div>${message}</div>
+                    </div>`;
+                resultMessage.style.display = 'block';
+
+                // Mesajı 10 saniyədən sonra avtomatik gizlət
+                if (type === 'success') {
+                    setTimeout(() => {
+                        resultMessage.style.display = 'none';
+                    }, 10000);
+                }
+            }
+
+            // Promokod aktivləşdikdə imtahan səhifəsində yeni seçimləri göstərmək üçün
+            function updateExamOptions() {
+                // Burada imtahan seçimlərini yeniləmək üçün kod yazıla bilər
+                console.log("Promokod aktivləşdi, imtahan seçimləri yenilənir...");
+            }
+        });
+    </script>
+}

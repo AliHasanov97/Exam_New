@@ -1,0 +1,125 @@
+﻿
+@{
+    ViewData["Title"] = "Rules";
+}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="~/css/rules.css" asp-append-version="true" />
+<div class="terms-container">
+
+    <div class="terms-header">
+        <!-- Dekorativ elementlər -->
+        <div class="decor decor-1">
+            <i class="bi bi-shield-lock"></i>
+        </div>
+        <div class="decor decor-2">
+            <i class="bi bi-file-lock2"></i>
+        </div>
+
+        <div class="container">
+            <h1 class="display-5 fw-bold mb-0">
+                <i class="bi bi-file-earmark-text-fill"></i>
+                İstifadə Şərtləri
+            </h1>
+            <p class="lead mb-0">İmtahan.az platformasının rəsmi istifadə qaydaları və şərtləri</p>
+        </div>
+    </div>
+
+    <!-- Introduction -->
+    <div class="text-center mb-5">
+        <h2 class="terms-title">Xoş gəlmisiniz!</h2>
+        <p class="lead">İmtahan.az saytına giriş və istifadə aşağıdakı şərtlərə tabe olmaqla həyata keçirilir. Saytdan istifadə etməklə siz bu şərtləri qəbul etmiş sayılırsınız.</p>
+    </div>
+
+    <!-- Warning Box -->
+    <div class="highlight-box">
+        <div class="d-flex align-items-start">
+            <i class="bi bi-exclamation-triangle-fill fs-4 text-warning me-3"></i>
+            <div>
+                <h4 class="mt-0 mb-2">Diqqət!</h4>
+                <p class="mb-0">Əgər bu şərtlərlə razı deyilsinizsə, saytdan istifadə etməyiniz tövsiyə olunmur. Davam etməklə bütün şərtləri qəbul etdiyiniz təsdiqlənir.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms Sections -->
+    <section>
+        <h3 class="section-title">1. Ümumi Şərtlər</h3>
+        <p>Bu şərtlər İmtahan.az saytı və onun bütün subdomenləri üzrə xidmətlərimizə şamil edilir. Xidmətlərimizdən istifadə etməzdən əvvəl diqqətlə oxuyun.</p>
+
+        <ul class="terms-list">
+            <li>Sayt 16 yaşdan yuxarı istifadəçilər üçün nəzərdə tutulub</li>
+            <li>Bütün istifadəçilər qeydiyyatdan keçməlidir</li>
+            <li>Hesab məlumatlarının düzgünlüyündən istifadəçi məsuldur</li>
+        </ul>
+    </section>
+
+    <section>
+        <h3 class="section-title">2. İstifadəçi Vəzifələri</h3>
+        <p>Platformamızdan istifadə zamanı aşağıdakı qaydalara əməl etməlisiniz:</p>
+
+        <ul class="terms-list">
+            <li>Şəxsi hesabınızın təhlükəsizliyini təmin etməlisiniz</li>
+            <li>Saytın normal işini pozan hərəkətlərdən çəkinməlisiniz</li>
+            <li>Qanunsuz və ya zərərli məzmun yerləşdirmək qadağandır</li>
+            <li>Digər istifadəçilərə münasibətdə nəzakət qaydalarına riayət edilməlidir</li>
+        </ul>
+    </section>
+
+    <section>
+        <h3 class="section-title">3. Məxfilik Siyasəti</h3>
+        <p>Şəxsi məlumatlarınızın qorunması bizim üçün prioritetdir:</p>
+
+        <div class="highlight-box">
+            <div class="d-flex align-items-start">
+                <i class="bi bi-shield-lock fs-4 text-primary me-3"></i>
+                <div>
+                    <h4 class="mt-0 mb-2">Məlumatlarınızın Qorunması</h4>
+                    <p class="mb-0">Şəxsi məlumatlarınız <a asp-action="Privacy" class="text-decoration-none">Gizlilik Siyasətimiz</a>ə uyğun olaraq qorunur və ancaq qanuni əsaslarla istifadə olunur. Məlumatlarınız heç bir şəxslə icazəsiz paylaşılmayacaq.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3 class="section-title">4. Xidmətlərdən İstifadə</h3>
+        <p>Platformamızda təqdim olunan xidmətlərdən istifadə qaydaları:</p>
+
+        <ul class="terms-list">
+            <li>Test materialları yalnız şəxsi istifadə üçün nəzərdə tutulub</li>
+            <li>Məlumatların kommersiya məqsədi ilə paylaşılması qadağandır</li>
+            <li>Xidmətlərdən qeyri-qanuni istifadə halları qanun yolu ilə təqib olunacaq</li>
+            <li>Premium üzvlük şərtləri ayrıca müqavilə ilə tənzimlənir</li>
+        </ul>
+    </section>
+
+    <section>
+        <h3 class="section-title">5. Məsuliyyətin Məhdudlaşdırılması</h3>
+        <p>İmtahan.az saytı vasitəsilə əldə edilən nəticələrə görə məsuliyyət daşımırıq:</p>
+
+        <div class="highlight-box">
+            <div class="d-flex align-items-start">
+                <i class="bi bi-info-circle fs-4 text-info me-3"></i>
+                <div>
+                    <p class="mb-0">Bütün məlumatlar "olduğu kimi" təqdim olunur. İmtahan nəticələriniz yalnız informativ məqsəd daşıyır və rəsmi sənəd hesab edilmir. Dəqiq nəticələr üçün rəsmi imtahan mərkəzlərinə müraciət edin.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3 class="section-title">6. Dəyişikliklər Hüququ</h3>
+        <p>İstifadə şərtlərimiz vaxtaşırı yenilənə bilər:</p>
+
+        <ul class="terms-list">
+            <li>Dəyişikliklər saytımızda dərc edilməklə qüvvəyə minir</li>
+            <li>Əhəmiyyətli dəyişikliklər barədə e-poçt vasitəsilə xəbərdar ediləcəksiniz</li>
+            <li>Dəyişikliklərdən sonra saytdan istifadəyə davam etməklə yeni şərtləri qəbul etmiş sayılırsınız</li>
+        </ul>
+    </section>
+
+    <!-- Update Info -->
+    <div class="update-info">
+        <p>Son yenilənmə: 15 İyul 2023</p>
+    </div>
+</div>

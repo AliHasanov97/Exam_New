@@ -1,0 +1,49 @@
+/* Custom Styles */
+.services-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.service-card {
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.hover-effect:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+.icon-wrapper {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.service-card:hover .icon-wrapper {
+    transform: rotate(5deg) scale(1.1);
+}
+
+.bg-purple {
+    background-color: #6f42c1 !important;
+}
+
+.text-purple {
+    color: #6f42c1 !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767.98px) {
+    .services-section {
+        padding: 3rem 0;
+    }
+
+    .display-5 {
+        font-size: 2.2rem;
+    }
+}

@@ -1,0 +1,83 @@
+/* About Section Styling */
+.about-section {
+    background-color: #f8f9fa;
+    position: relative;
+    overflow: hidden;
+}
+
+    .about-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="%23e9ecef" d="M0,0 L100,0 L100,100 Q50,80 0,100 Z"/></svg>');
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        background-position: bottom center;
+        opacity: 0.5;
+        z-index: 0;
+    }
+
+.about-image-container {
+    border-radius: 16px;
+    overflow: hidden;
+    transform: perspective(1000px) rotateY(-5deg);
+    transition: transform 0.5s ease;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+}
+
+    .about-image-container:hover {
+        transform: perspective(1000px) rotateY(0deg);
+    }
+
+.main-image {
+    transition: transform 0.5s ease;
+}
+
+.about-image-container:hover .main-image {
+    transform: scale(1.03);
+}
+
+.features-list {
+    border-left: 3px solid rgba(13, 110, 253, 0.2);
+    padding-left: 15px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+    .about-section {
+        text-align: center;
+    }
+
+    .about-content {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .features-list {
+        border-left: none;
+        padding-left: 0;
+    }
+
+    .about-image-container {
+        transform: none;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .ps-lg-5 {
+        padding-left: 0 !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .about-section {
+        padding: 3rem 0;
+    }
+
+    h2.display-5 {
+        font-size: 2.2rem;
+    }
+}

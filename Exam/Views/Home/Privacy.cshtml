@@ -1,0 +1,301 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+    :root {
+        --primary-color: #4361ee;
+        --secondary-color: #3f37c9;
+        --accent-color: #4895ef;
+        --text-color: #2b2d42;
+        --light-bg: #f8f9fa;
+        --border-radius: 8px;
+        --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.7;
+        color: var(--text-color);
+        max-width: 900px;
+        margin: 0 auto;
+        margin-top:90px;
+        padding: 0 20px 40px;
+        background-color: #fff;
+    }
+
+  
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .last-updated {
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+
+    h2 {
+        color: var(--secondary-color);
+        margin-top: 40px;
+        font-size: 1.5rem;
+        position: relative;
+        padding-left: 15px;
+    }
+
+        h2:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 5px;
+            height: 70%;
+            width: 4px;
+            background: var(--accent-color);
+            border-radius: 4px;
+        }
+
+    .policy-card {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 25px;
+        margin: 25px 0;
+        box-shadow: var(--box-shadow);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .feature-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 15px;
+        margin: 20px 0;
+    }
+
+    .feature-item {
+        background: var(--light-bg);
+        padding: 15px;
+        border-radius: var(--border-radius);
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .icon {
+        font-size: 1.5rem;
+        margin-right: 15px;
+        color: var(--accent-color);
+        flex-shrink: 0;
+    }
+
+    .contact-box {
+        background: linear-gradient(135deg, #f0f7ff 0%, #e1f0ff 100%);
+        border-radius: var(--border-radius);
+        padding: 25px;
+        margin: 40px 0;
+        text-align: center;
+        border: 1px solid rgba(67, 97, 238, 0.2);
+    }
+
+    .contact-title {
+        color: var(--primary-color);
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+
+    .contact-email {
+        display: inline-block;
+        background: white;
+        padding: 12px 25px;
+        border-radius: 50px;
+        color: var(--primary-color);
+        font-weight: 600;
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(67, 97, 238, 0.1);
+        transition: all 0.3s ease;
+    }
+
+        .contact-email:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.15);
+        }
+
+    .privacy-header {
+        background: linear-gradient(135deg, #3f37c9 0%, #4361ee 100%);
+        padding: 40px 20px;
+        border-radius: 16px;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 30px;
+    }
+
+        .privacy-header::before,
+        .privacy-header::after {
+            content: '';
+            position: absolute;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .privacy-header::before {
+            top: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+        }
+
+        .privacy-header::after {
+            bottom: -30px;
+            right: -30px;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+        }
+
+    .privacy-container {
+        max-width: 800px;
+        margin: 0 auto;
+        color: white;
+        text-align: center;
+        position: relative;
+        z-index: 2;
+    }
+
+    .privacy-title-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        gap: 15px;
+    }
+
+    .privacy-icon {
+        width: 40px;
+        height: 40px;
+        stroke: currentColor;
+        stroke-width: 2;
+        fill: none;
+    }
+
+    .privacy-title {
+        font-size: 32px;
+        font-weight: 700;
+        margin: 0;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        letter-spacing: -0.5px;
+    }
+
+    .privacy-description {
+        font-size: 18px;
+        line-height: 1.6;
+        margin: 0;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+<section>
+    <div class="privacy-header">
+        <div class="privacy-container">
+            <div class="privacy-title-container">
+                <svg class="privacy-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+                <h1 class="privacy-title">Gizlilik Siyasəti</h1>
+            </div>
+            <p class="privacy-description">
+                İstifadəçilərimizin məxfiliyinə hörmət edirik. Bu sənəd İmtahan.az platformasında məlumatlarınızın necə toplandığını, istifadə edildiyini və qorunduğunu təsvir edir.
+            </p>
+        </div>
+    </div>
+</section>
+
+<div class="policy-card">
+    <h2><i class="fas fa-database icon"></i>Toplanan Məlumatlar</h2>
+    <div class="feature-list">
+        <div class="feature-item">
+            <div class="icon"><i class="fas fa-user"></i></div>
+            <div>
+                <h3>Şəxsi Məlumatlar</h3>
+                <p>Ad, e-poçt ünvanı, telefon nömrəsi (qeydiyyat zamanı)</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="icon"><i class="fas fa-laptop-code"></i></div>
+            <div>
+                <h3>Texniki Məlumatlar</h3>
+                <p>IP ünvanı, brauzer növü, cihaz məlumatları, işləmə sistemi</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="icon"><i class="fas fa-chart-line"></i></div>
+            <div>
+                <h3>İstifadə Analitikası</h3>
+                <p>Səhifə görüntüləmələri, kliklər, sistemdə keçirilən vaxt</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="policy-card">
+    <h2><i class="fas fa-cogs icon"></i>Məlumatların İstifadəsi</h2>
+    <div class="feature-list">
+        <div class="feature-item">
+            <div class="icon"><i class="fas fa-user-cog"></i></div>
+            <div>
+                <h3>Xidmətlərin Təkmilləşdirilməsi</h3>
+                <p>Təcrübənizi fərdiləşdirmək və xidmətlərimizi yaxşılaşdırmaq</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="icon"><i class="fas fa-comments"></i></div>
+            <div>
+                <h3>Əlaqə və Dəstək</h3>
+                <p>Sorğularınıza cavab vermək və texniki dəstək göstərmək</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="icon"><i class="fas fa-shield-virus"></i></div>
+            <div>
+                <h3>Təhlükəsizlik</h3>
+                <p>Saxtakarlıq və digər təhlükəsizlik təhdidlərini aşkar etmək</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="policy-card">
+    <h2><i class="fas fa-lock icon"></i>Məlumatların Qorunması</h2>
+    <p>Məlumatlarınızın təhlükəsizliyi bizim üçün ən vacib prioritetdir:</p>
+    <div class="feature-list">
+        <div class="feature-item">
+            <div class="icon"><i class="fas fa-key"></i></div>
+            <div>
+                <h3>Şifrələmə</h3>
+                <p>Bütün məlumat ötürmələri SSL/TLS texnologiyası ilə qorunur</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="icon"><i class="fas fa-user-shield"></i></div>
+            <div>
+                <h3>Giriş Nəzarəti</h3>
+                <p>Məlumatlara yalnız yetkili işçilər məhdud şəkildə çata bilər</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="icon"><i class="fas fa-sync-alt"></i></div>
+            <div>
+                <h3>Müntəzəm Auditlər</h3>
+                <p>Təhlükəsizlik sistemlərimiz daim yenilənir və yoxlanılır</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="contact-box">
+    <h3 class="contact-title">Gizlilik Siyasəti ilə bağlı suallarınız var?</h3>
+    <a href="mailto:privacy@imtahan.com" class="contact-email">
+        <i class="fas fa-envelope" style="margin-right: 8px;"></i>privacy@imtahan.com
+    </a>
+</div>

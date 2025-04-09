@@ -1,0 +1,481 @@
+﻿@{
+    ViewData["Title"] = "Balans";
+    ViewData["PageTitle"] = "Balans";
+    ViewData["PageIcon"] = "bi-wallet2";
+    ViewData["Progress"] = "100";
+}
+
+<div class="balance-container">
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Balans Kartı -->
+            <div class="balance-card shadow-lg">
+                <div class="balance-header">
+                    <h3><i class="bi bi-wallet2"></i> Cari Balans</h3>
+                    <div class="balance-amount">
+                        <span>50.00 ₼</span>
+                        <button class="btn btn-refresh" title="Yenilə">
+                            <i class="bi bi-arrow-clockwise"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="balance-actions">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addBalanceModal">
+                        <i class="bi bi-plus-circle"></i> Balans artır
+                    </button>
+                    <button class="btn btn-outline-secondary">
+                        <i class="bi bi-credit-card"></i> Ödəniş tarixçəsi
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tariflər Sektoru -->
+            <div class="tariffs-section mt-4 shadow-lg p-4 rounded">
+                <h4><i class="bi bi-stars"></i> Mövcud Tariflər</h4>
+
+                <div class="row">
+                    <!-- Tarif 1 -->
+                    <div class="col-md-4 mb-3">
+                        <div class="tariff-card shadow-sm">
+                            <div class="tariff-header bg-primary">
+                                <h5>Standart</h5>
+                                <div class="price">25.00 ₼</div>
+                            </div>
+                            <div class="tariff-body">
+                                <ul>
+                                    <li><i class="bi bi-check-circle"></i> 5 imtahan</li>
+                                    <li><i class="bi bi-check-circle"></i> 1 ay müddət</li>
+                                    <li><i class="bi bi-check-circle"></i> Ətraflı nəticələr</li>
+                                </ul>
+                                <div class="promo-indicator mb-2" style="display: none;">
+                                    <span class="badge bg-danger">Promokodla 20% endirim</span>
+                                </div>
+                                <button class="btn btn-buy">Al</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tarif 2 -->
+                    <div class="col-md-4 mb-3">
+                        <div class="tariff-card shadow-sm">
+                            <div class="tariff-header bg-success">
+                                <h5>Premium</h5>
+                                <div class="price">45.00 ₼</div>
+                            </div>
+                            <div class="tariff-body">
+                                <ul>
+                                    <li><i class="bi bi-check-circle"></i> 10 imtahan</li>
+                                    <li><i class="bi bi-check-circle"></i> 2 ay müddət</li>
+                                    <li><i class="bi bi-check-circle"></i> Ətraflı nəticələr</li>
+                                </ul>
+                                <div class="promo-indicator mb-2" style="display: none;">
+                                    <span class="badge bg-danger">Promokodla 15% endirim</span>
+                                </div>
+                                <button class="btn btn-buy">Al</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tarif 3 -->
+                    <div class="col-md-4 mb-3">
+                        <div class="tariff-card shadow-sm">
+                            <div class="tariff-header bg-warning">
+                                <h5>VIP</h5>
+                                <div class="price">80.00 ₼</div>
+                            </div>
+                            <div class="tariff-body">
+                                <ul>
+                                    <li><i class="bi bi-check-circle"></i> 20 imtahan</li>
+                                    <li><i class="bi bi-check-circle"></i> 6 ay müddət</li>
+                                    <li><i class="bi bi-check-circle"></i> Ətraflı nəticələr</li>
+                                </ul>
+                                <div class="promo-indicator mb-2" style="display: none;">
+                                    <span class="badge bg-danger">Promokodla 25% endirim</span>
+                                </div>
+                                <button class="btn btn-buy">Al</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <!-- Son Əməliyyatlar -->
+            <div class="recent-transactions shadow-lg p-4 rounded">
+                <h4><i class="bi bi-clock-history"></i> Son əməliyyatlar</h4>
+
+                <div class="transaction-list">
+                    <!-- Əməliyyat 1 -->
+                    <div class="transaction-item">
+                        <div class="transaction-icon success">
+                            <i class="bi bi-plus-lg"></i>
+                        </div>
+                        <div class="transaction-details">
+                            <div class="transaction-title">Balans artırıldı</div>
+                            <div class="transaction-date">15.05.2023</div>
+                        </div>
+                        <div class="transaction-amount success">+20.00 ₼</div>
+                    </div>
+
+                    <!-- Əməliyyat 2 -->
+                    <div class="transaction-item">
+                        <div class="transaction-icon danger">
+                            <i class="bi bi-dash-lg"></i>
+                        </div>
+                        <div class="transaction-details">
+                            <div class="transaction-title">Premium tarif alındı</div>
+                            <div class="transaction-date">10.05.2023</div>
+                        </div>
+                        <div class="transaction-amount danger">-45.00 ₼</div>
+                    </div>
+
+                    <!-- Əməliyyat 3 -->
+                    <div class="transaction-item">
+                        <div class="transaction-icon success">
+                            <i class="bi bi-plus-lg"></i>
+                        </div>
+                        <div class="transaction-details">
+                            <div class="transaction-title">Balans artırıldı</div>
+                            <div class="transaction-date">05.05.2023</div>
+                        </div>
+                        <div class="transaction-amount success">+30.00 ₼</div>
+                    </div>
+                </div>
+
+                <a href="#" class="view-all">Bütün əməliyyatlar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Balans Artırma Modalı -->
+@section Container {
+    <div class="modal fade" id="addBalanceModal" tabindex="-1" aria-labelledby="addBalanceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addBalanceModalLabel"><i class="bi bi-plus-circle"></i> Balans artır</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addBalanceForm">
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Məbləğ (₼)</label>
+                            <input type="number" class="form-control shadow-sm" id="amount" min="5" max="500" step="0.01" required>
+                            <div class="form-text">Minimum 5 ₼, maksimum 500 ₼</div>
+                        </div>
+
+                        <!-- Promocode bölməsi -->
+                        <div class="mb-3">
+                            <label for="promocode" class="form-label">Promokod (İstəyə bağlı)</label>
+                            <div class="input-group shadow-sm">
+                                <input type="text" class="form-control" id="promocode" placeholder="Promokodu daxil edin">
+                                <button class="btn btn-outline-secondary" type="button" id="applyPromo">
+                                    <i class="bi bi-check-circle"></i> Tətbiq et
+                                </button>
+                            </div>
+                            <div id="promoMessage" class="form-text mt-1"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Ödəniş üsulu</label>
+                            <div class="payment-methods">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" id="cardPayment" value="card" checked>
+                                    <label class="form-check-label" for="cardPayment">
+                                        <i class="bi bi-credit-card"></i> Bank kartı
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" id="paypalPayment" value="paypal">
+                                    <label class="form-check-label" for="paypalPayment">
+                                        <i class="bi bi-paypal"></i> PayPal
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary shadow-sm" data-bs-dismiss="modal">Ləğv et</button>
+                    <button type="submit" form="addBalanceForm" class="btn btn-primary shadow-sm">Ödəniş et</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Styles {
+    <style>
+        .balance-container {
+            padding: 20px;
+        }
+
+        .balance-card {
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            background: white;
+        }
+
+        .balance-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .balance-amount {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+            .balance-amount span {
+                font-size: 24px;
+                font-weight: 600;
+                color: #333;
+            }
+
+        .btn-refresh {
+            background: rgba(0, 0, 0, 0.05);
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+        }
+
+        .balance-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .tariffs-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .tariff-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+            .tariff-card:hover {
+                transform: translateY(-5px);
+            }
+
+        .tariff-header {
+            padding: 15px;
+            color: white;
+            text-align: center;
+        }
+
+            .tariff-header .price {
+                font-size: 20px;
+                font-weight: bold;
+                margin-top: 5px;
+            }
+
+        .tariff-body {
+            padding: 15px;
+        }
+
+            .tariff-body ul {
+                list-style: none;
+                padding: 0;
+                margin-bottom: 20px;
+            }
+
+                .tariff-body ul li {
+                    margin-bottom: 8px;
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    color: #555;
+                }
+
+        .btn-buy {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+            .btn-buy:hover {
+                background: var(--primary-dark);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            }
+
+        .recent-transactions {
+            background: white;
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .transaction-list {
+            margin-top: 15px;
+        }
+
+        .transaction-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .transaction-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+
+            .transaction-icon.success {
+                background: rgba(40, 167, 69, 0.2);
+                color: #28a745;
+            }
+
+            .transaction-icon.danger {
+                background: rgba(220, 53, 69, 0.2);
+                color: #dc3545;
+            }
+
+        .transaction-details {
+            flex: 1;
+        }
+
+        .transaction-title {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .transaction-date {
+            font-size: 12px;
+            color: #777;
+        }
+
+        .transaction-amount {
+            font-weight: 600;
+        }
+
+            .transaction-amount.success {
+                color: #28a745;
+            }
+
+            .transaction-amount.danger {
+                color: #dc3545;
+            }
+
+        .view-all {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form-check-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #555;
+        }
+
+        /* Promocode üçün əlavə stillər */
+        #promoMessage .text-success {
+            color: #28a745;
+            font-weight: 500;
+        }
+
+        #promoMessage .text-danger {
+            color: #dc3545;
+            font-weight: 500;
+        }
+
+        .input-group .btn-outline-secondary {
+            border-color: #ced4da;
+            transition: all 0.3s;
+        }
+
+            .input-group .btn-outline-secondary:hover {
+                background-color: #f8f9fa;
+            }
+
+        .promo-indicator .badge {
+            font-size: 12px;
+            padding: 5px 8px;
+        }
+
+        /* Shadow dərəcələri */
+        .shadow-sm {
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .shadow-lg {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        /* Modal üçün düzəlişlər */
+        .modal {
+            z-index: 1060 !important;
+        }
+
+        .modal-backdrop {
+            z-index: 1050 !important;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            border: none;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Promokod tətbiq etmə funksiyası
+            document.getElementById('applyPromo').addEventListener('click', function() {
+                const promoCode = document.getElementById('promocode').value;
+                const promoMessage = document.getElementById('promoMessage');
+
+                // Burada promokodu yoxlamaq üçün API çağırışı edilə bilər
+                if (promoCode === 'TEST10') {
+                    promoMessage.innerHTML = '<span class="text-success"><i class="bi bi-check-circle"></i> Promokod tətbiq edildi: 10% endirim</span>';
+                    // Endirim hesablaması burada edilə bilər
+                } else if (promoCode === 'TEST20') {
+                    promoMessage.innerHTML = '<span class="text-success"><i class="bi bi-check-circle"></i> Promokod tətbiq edildi: 20% endirim</span>';
+                } else if (promoCode) {
+                    promoMessage.innerHTML = '<span class="text-danger"><i class="bi bi-x-circle"></i> Yanlış promokod</span>';
+                } else {
+                    promoMessage.innerHTML = '';
+                }
+            });
+
+            // Promokod aktiv olduqda tarif kartlarında endirim göstəricilərini göstər
+
+        });
+    </script>
+}

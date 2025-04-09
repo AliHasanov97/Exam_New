@@ -1,0 +1,295 @@
+﻿
+
+<div class="dashboard-section">
+    <div class="section-title">
+        <i class="bi bi-filter-circle"></i>
+        <h3>Filtrlə</h3>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="form-label">Fənn</label>
+                <select class="form-select" id="subjectFilter">
+                    <option value="">Bütün fənlər</option>
+                    <option value="riyaziyyat">Riyaziyyat</option>
+                    <option value="fizika">Fizika</option>
+                    <option value="kimya">Kimya</option>
+                    <option value="biologiya">Biologiya</option>
+                    <option value="azerbaycan-dili">Azərbaycan Dili</option>
+                    <option value="ingilis-dili">İngilis Dili</option>
+                    <option value="tarix">Tarix</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="form-label">Çətinlik</label>
+                <select class="form-select" id="difficultyFilter">
+                    <option value="">Bütün səviyyələr</option>
+                    <option value="easy">Asan</option>
+                    <option value="medium">Orta</option>
+                    <option value="hard">Çətin</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="form-label">Status</label>
+                <select class="form-select" id="statusFilter">
+                    <option value="">Bütün statuslar</option>
+                    <option value="available">Mövcud</option>
+                    <option value="completed">Tamamlanmış</option>
+                    <option value="upcoming">Gələcək</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+            <button class="btn btn-primary w-100" id="applyFilters">
+                <i class="bi bi-funnel"></i> Filtrlə
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-section">
+    <div class="section-title">
+        <i class="bi bi-journal-bookmark"></i>
+        <h3>Fənnlər</h3>
+    </div>
+
+    <div class="row" id="subjectsContainer">
+        <!-- Riyaziyyat Kartı -->
+        <div class="col-md-6 col-lg-4 mb-4 subject-card" data-subject="riyaziyyat" data-difficulty="medium" data-status="available">
+            <div class="exam-card">
+                <div class="exam-header">
+                    <span class="exam-badge primary">
+                        <i class="bi bi-calculator"></i> Riyaziyyat
+                    </span>
+                </div>
+                <div class="exam-meta">
+                    <span><i class="bi bi-clock"></i> 60 dəqiqə</span>
+                    <span><i class="bi bi-question-circle"></i> 30 sual</span>
+                    <span><i class="bi bi-bar-chart"></i> Orta</span>
+                </div>
+                <p class="mb-3">Riyaziyyat fənnindən imtahan sualları. Əsasən cəbr və həndəsə mövzularını əhatə edir.</p>
+                <div class="exam-footer">
+                    <div class="days-left">
+                        <i class="bi bi-calendar-check"></i> Son müraciət: 15 gün
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="/ImtahanDetal?subject=riyaziyyat" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-book"></i> Sualları Oxu
+                        </a>
+                        <a href="/ImtahanaBasla?subject=riyaziyyat" class="btn btn-sm btn-primary">
+                            <i class="bi bi-pencil"></i> İmtahana Başla
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fizika Kartı -->
+        <div class="col-md-6 col-lg-4 mb-4 subject-card" data-subject="fizika" data-difficulty="hard" data-status="available">
+            <div class="exam-card">
+                <div class="exam-header">
+                    <span class="exam-badge" style="background: rgba(29, 161, 242, 0.2); color: #1da1f2;">
+                        <i class="bi bi-lightning-charge"></i> Fizika
+                    </span>
+                </div>
+                <div class="exam-meta">
+                    <span><i class="bi bi-clock"></i> 45 dəqiqə</span>
+                    <span><i class="bi bi-question-circle"></i> 25 sual</span>
+                    <span><i class="bi bi-bar-chart"></i> Çətin</span>
+                </div>
+                <p class="mb-3">Fizika fənnindən imtahan sualları. Mexanika, termodinamika və elektromaqnetizm mövzuları.</p>
+                <div class="exam-footer">
+                    <div class="days-left">
+                        <i class="bi bi-calendar-check"></i> Son müraciət: 10 gün
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="/ImtahanDetal?subject=fizika" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-book"></i> Sualları Oxu
+                        </a>
+                        <a href="/ImtahanaBasla?subject=fizika" class="btn btn-sm btn-primary">
+                            <i class="bi bi-pencil"></i> İmtahana Başla
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kimya Kartı -->
+        <div class="col-md-6 col-lg-4 mb-4 subject-card" data-subject="kimya" data-difficulty="medium" data-status="completed">
+            <div class="exam-card">
+                <div class="exam-header">
+                    <span class="exam-badge" style="background: rgba(0, 184, 148, 0.2); color: var(--success);">
+                        <i class="bi bi-flask"></i> Kimya
+                    </span>
+                    <span class="ms-auto badge bg-success">Tamamlanmış</span>
+                </div>
+                <div class="exam-meta">
+                    <span><i class="bi bi-clock"></i> 50 dəqiqə</span>
+                    <span><i class="bi bi-question-circle"></i> 28 sual</span>
+                    <span><i class="bi bi-bar-chart"></i> Orta</span>
+                </div>
+                <p class="mb-3">Kimya fənnindən imtahan sualları. Üzvi və qeyri-üzvi kimya mövzularını əhatə edir.</p>
+                <div class="exam-footer">
+                    <div class="days-left text-success">
+                        <i class="bi bi-check-circle"></i> Tamamlanıb: 85%
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="/ImtahanDetal?subject=kimya" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-book"></i> Sualları Oxu
+                        </a>
+                        <a href="/Netice?subject=kimya" class="btn btn-sm btn-success">
+                            <i class="bi bi-graph-up"></i> Nəticəyə Bax
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Biologiya Kartı -->
+        <div class="col-md-6 col-lg-4 mb-4 subject-card" data-subject="biologiya" data-difficulty="easy" data-status="available">
+            <div class="exam-card">
+                <div class="exam-header">
+                    <span class="exam-badge" style="background: rgba(253, 203, 110, 0.2); color: var(--warning);">
+                        <i class="bi bi-flower2"></i> Biologiya
+                    </span>
+                </div>
+                <div class="exam-meta">
+                    <span><i class="bi bi-clock"></i> 40 dəqiqə</span>
+                    <span><i class="bi bi-question-circle"></i> 20 sual</span>
+                    <span><i class="bi bi-bar-chart"></i> Asan</span>
+                </div>
+                <p class="mb-3">Biologiya fənnindən imtahan sualları. Hüceyrə biologiyası və genetika əsas mövzulardır.</p>
+                <div class="exam-footer">
+                    <div class="days-left">
+                        <i class="bi bi-calendar-check"></i> Son müraciət: 20 gün
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="/ImtahanDetal?subject=biologiya" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-book"></i> Sualları Oxu
+                        </a>
+                        <a href="/ImtahanaBasla?subject=biologiya" class="btn btn-sm btn-primary">
+                            <i class="bi bi-pencil"></i> İmtahana Başla
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Azərbaycan Dili Kartı -->
+        <div class="col-md-6 col-lg-4 mb-4 subject-card" data-subject="azerbaycan-dili" data-difficulty="easy" data-status="upcoming">
+            <div class="exam-card">
+                <div class="exam-header">
+                    <span class="exam-badge" style="background: rgba(214, 48, 49, 0.2); color: var(--danger);">
+                        <i class="bi bi-translate"></i> Azərbaycan Dili
+                    </span>
+                    <span class="ms-auto badge bg-secondary">Gələcək</span>
+                </div>
+                <div class="exam-meta">
+                    <span><i class="bi bi-clock"></i> 30 dəqiqə</span>
+                    <span><i class="bi bi-question-circle"></i> 15 sual</span>
+                    <span><i class="bi bi-bar-chart"></i> Asan</span>
+                </div>
+                <p class="mb-3">Azərbaycan dili fənnindən imtahan sualları. Qrammatika və ədəbiyyat bilikləri.</p>
+                <div class="exam-footer">
+                    <div class="days-left text-secondary">
+                        <i class="bi bi-hourglass"></i> Başlayır: 5 gün sonra
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-outline-secondary" disabled>
+                            <i class="bi bi-book"></i> Sualları Oxu
+                        </button>
+                        <button class="btn btn-sm btn-secondary" disabled>
+                            <i class="bi bi-pencil"></i> Gözləyin
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- İngilis Dili Kartı -->
+        <div class="col-md-6 col-lg-4 mb-4 subject-card" data-subject="ingilis-dili" data-difficulty="medium" data-status="available">
+            <div class="exam-card">
+                <div class="exam-header">
+                    <span class="exam-badge" style="background: rgba(165, 94, 234, 0.2); color: #a55eea;">
+                        <i class="bi bi-translate"></i> İngilis Dili
+                    </span>
+                </div>
+                <div class="exam-meta">
+                    <span><i class="bi bi-clock"></i> 35 dəqiqə</span>
+                    <span><i class="bi bi-question-circle"></i> 20 sual</span>
+                    <span><i class="bi bi-bar-chart"></i> Orta</span>
+                </div>
+                <p class="mb-3">İngilis dili fənnindən imtahan sualları. Qrammatika və oxuma bacarıqları.</p>
+                <div class="exam-footer">
+                    <div class="days-left">
+                        <i class="bi bi-calendar-check"></i> Son müraciət: 12 gün
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="/ImtahanDetal?subject=ingilis-dili" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-book"></i> Sualları Oxu
+                        </a>
+                        <a href="/ImtahanaBasla?subject=ingilis-dili" class="btn btn-sm btn-primary">
+                            <i class="bi bi-pencil"></i> İmtahana Başla
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   @*  <div class="section-footer">
+        <a href="#" class="view-all">
+            <i class="bi bi-arrow-right"></i> Bütün imtahanları gör
+        </a>
+    </div> *@
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Filter functionality
+            $('#applyFilters').click(function() {
+                const subject = $('#subjectFilter').val();
+                const difficulty = $('#difficultyFilter').val();
+                const status = $('#statusFilter').val();
+
+                $('.subject-card').each(function() {
+                    const cardSubject = $(this).data('subject');
+                    const cardDifficulty = $(this).data('difficulty');
+                    const cardStatus = $(this).data('status');
+
+                    const subjectMatch = subject === '' || cardSubject === subject;
+                    const difficultyMatch = difficulty === '' || cardDifficulty === difficulty;
+                    const statusMatch = status === '' || cardStatus === status;
+
+                    if (subjectMatch && difficultyMatch && statusMatch) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+
+            // Reset filters
+            $('#resetFilters').click(function() {
+                $('#subjectFilter, #difficultyFilter, #statusFilter').val('');
+                $('.subject-card').show();
+            });
+
+            // Add animation to exam cards
+            $('.exam-card').hover(
+                function() {
+                    $(this).css('transform', 'translateY(-5px)');
+                },
+                function() {
+                    $(this).css('transform', 'translateY(0)');
+                }
+            );
+        });
+    </script>
+}

@@ -1,0 +1,217 @@
+﻿
+
+<div class="dashboard-section">
+    <div class="section-title">
+        <i class="bi bi-clipboard-data-fill"></i>
+        <h3>İmtahan Nəticələri</h3>
+        <div class="ms-auto">
+            <div class="dropdown">
+                <button class="btn btn-sm dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown"
+                        style="background: var(--primary-light); color: var(--primary);">
+                    <i class="bi bi-funnel"></i> Filter
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+                    <li><a class="dropdown-item" href="#">Son 1 ay</a></li>
+                    <li><a class="dropdown-item" href="#">Son 3 ay</a></li>
+                    <li><a class="dropdown-item" href="#">Bu il</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Hamısı</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="results-summary">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="summary-card">
+                    <div class="summary-icon" style="background: rgba(0, 184, 148, 0.1);">
+                        <i class="bi bi-check-circle-fill" style="color: var(--success);"></i>
+                    </div>
+                    <div class="summary-content">
+                        <h5>92.4</h5>
+                        <p>Ortalama bal</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="summary-card">
+                    <div class="summary-icon" style="background: rgba(108, 92, 231, 0.1);">
+                        <i class="bi bi-journal-text" style="color: var(--primary);"></i>
+                    </div>
+                    <div class="summary-content">
+                        <h5>24</h5>
+                        <p>İmtahan sayı</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="summary-card">
+                    <div class="summary-icon" style="background: rgba(253, 203, 110, 0.1);">
+                        <i class="bi bi-graph-up" style="color: var(--warning);"></i>
+                    </div>
+                    <div class="summary-content">
+                        <h5>+8.2%</h5>
+                        <p>İnkişaf</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="summary-card">
+                    <div class="summary-icon" style="background: rgba(45, 152, 218, 0.1);">
+                        <i class="bi bi-award" style="color: #2d98da;"></i>
+                    </div>
+                    <div class="summary-content">
+                        <h5>5</h5>
+                        <p>Ən yüksək bal</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="results-list-container" style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; box-shadow: var(--neu-shadow); margin-top: 1.5rem;">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5>İmtahan nəticələrinin siyahısı</h5>
+            <div class="search-box">
+                <i class="bi bi-search"></i>
+                <input type="text" placeholder="İmtahan axtar...">
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table results-table">
+                <thead>
+                    <tr>
+                        <th>İmtahan adı</th>
+                        <th>Tarix</th>
+                        <th>Müddət</th>
+                        <th>Bal</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Exam Result Row -->
+                    <tr onclick="window.location.href='Results/Details'" style="cursor: pointer;">
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="subject-icon me-2" style="background: rgba(108, 92, 231, 0.1);">
+                                    <i class="bi bi-calculator" style="color: var(--primary);"></i>
+                                </div>
+                                <span>Riyaziyyat - Final İmtahanı</span>
+                            </div>
+                        </td>
+                        <td>15 Yan 2023</td>
+                        <td>90 dəq</td>
+                        <td>
+                            <span class="badge bg-success">92/100</span>
+                        </td>
+                        <td>
+                            <span class="badge" style="background: rgba(0, 184, 148, 0.1); color: var(--success);">
+                                <i class="bi bi-check-circle-fill me-1"></i> Tamamlandı
+                            </span>
+                        </td>
+                        <td class="text-end">
+                            <i class="bi bi-chevron-right"></i>
+                        </td>
+                    </tr>
+
+                    <!-- Exam Result Row -->
+                    <tr onclick="window.location.href='/ExamResults/Detail/2'" style="cursor: pointer;">
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="subject-icon me-2" style="background: rgba(214, 48, 49, 0.1);">
+                                    <i class="bi bi-atom" style="color: var(--danger);"></i>
+                                </div>
+                                <span>Fizika - Ara İmtahan</span>
+                            </div>
+                        </td>
+                        <td>5 Dek 2022</td>
+                        <td>60 dəq</td>
+                        <td>
+                            <span class="badge bg-warning text-dark">87/100</span>
+                        </td>
+                        <td>
+                            <span class="badge" style="background: rgba(0, 184, 148, 0.1); color: var(--success);">
+                                <i class="bi bi-check-circle-fill me-1"></i> Tamamlandı
+                            </span>
+                        </td>
+                        <td class="text-end">
+                            <i class="bi bi-chevron-right"></i>
+                        </td>
+                    </tr>
+
+                    <!-- Exam Result Row -->
+                    <tr onclick="window.location.href='/ExamResults/Detail/3'" style="cursor: pointer;">
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="subject-icon me-2" style="background: rgba(253, 203, 110, 0.1);">
+                                    <i class="bi bi-flask" style="color: var(--warning);"></i>
+                                </div>
+                                <span>Kimya - Test İmtahanı</span>
+                            </div>
+                        </td>
+                        <td>20 Noy 2022</td>
+                        <td>45 dəq</td>
+                        <td>
+                            <span class="badge bg-warning text-dark">75/100</span>
+                        </td>
+                        <td>
+                            <span class="badge" style="background: rgba(0, 184, 148, 0.1); color: var(--success);">
+                                <i class="bi bi-check-circle-fill me-1"></i> Tamamlandı
+                            </span>
+                        </td>
+                        <td class="text-end">
+                            <i class="bi bi-chevron-right"></i>
+                        </td>
+                    </tr>
+
+                    <!-- Exam Result Row -->
+                    <tr onclick="window.location.href='/ExamResults/Detail/4'" style="cursor: pointer;">
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="subject-icon me-2" style="background: rgba(29, 161, 242, 0.1);">
+                                    <i class="bi bi-code-square" style="color: #1da1f2;"></i>
+                                </div>
+                                <span>İnformatika - Praktik İmtahan</span>
+                            </div>
+                        </td>
+                        <td>10 Okt 2022</td>
+                        <td>120 dəq</td>
+                        <td>
+                            <span class="badge bg-danger">64/100</span>
+                        </td>
+                        <td>
+                            <span class="badge" style="background: rgba(0, 184, 148, 0.1); color: var(--success);">
+                                <i class="bi bi-check-circle-fill me-1"></i> Tamamlandı
+                            </span>
+                        </td>
+                        <td class="text-end">
+                            <i class="bi bi-chevron-right"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <div class="text-muted small">
+                Ümumi: 24 imtahan
+            </div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination pagination-sm">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Əvvəlki</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Növbəti</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

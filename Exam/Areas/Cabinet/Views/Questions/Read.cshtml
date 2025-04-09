@@ -1,0 +1,172 @@
+﻿<style>
+  
+    .dashboard-section {
+        padding: 2rem;
+    }
+
+    .section-title {
+        margin-bottom: 2rem;
+    }
+
+    .question-list {
+        display: grid;
+        gap: 2rem;
+    }
+
+    .book-view .question-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .question-item {
+        background-color: #fff;
+        padding: 1.5rem;
+        border: 1px solid #dee2e6;
+        border-radius: 0.5rem;
+    }
+
+    .option {
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        background: rgba(108, 92, 231, 0.05);
+        border-left: 3px solid #ced4da;
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        cursor: not-allowed;
+        opacity: 0.8;
+    }
+
+        .option.correct {
+            border-left-color: #28a745;
+            background-color: rgba(40, 167, 69, 0.1);
+        }
+
+    .answer-explanation {
+        border-top: 1px dashed #ccc;
+        padding-top: 0.75rem;
+        margin-top: 1rem;
+    }
+
+</style>
+<div class="dashboard-section">
+    <div class="section-title d-flex flex-wrap align-items-center justify-content-between gap-3">
+        <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-journal-bookmark fs-4"></i>
+            <h3 class="mb-0">Riyaziyyat - Suallar</h3>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+            <input type="text" id="searchInput" class="form-control form-control-sm" placeholder="Sual axtar..." />
+            <input type="number" id="fromQuestion" class="form-control form-control-sm" placeholder="Sualdan" min="1" />
+            <input type="number" id="toQuestion" class="form-control form-control-sm" placeholder="Suallara qədər" min="1" />
+            <button class="btn btn-sm btn-outline-secondary" id="filterBtn">
+                <i class="bi bi-funnel"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-primary" id="printQuestions">
+                <i class="bi bi-printer"></i> Çap et
+            </button>
+            <button class="btn btn-sm btn-outline-secondary" id="toggleBookView">
+                <i class="bi bi-columns"></i> Kitab görünüşü
+            </button>
+        </div>
+    </div>
+
+    <div class="question-list" id="questionsContainer">
+        <!-- Sual 1 -->
+        <div class="question-item" data-id="1">
+            <div class="question-number">Sual 1</div>
+            <div class="question-text">
+                <p>2x + 5 = 15 tənliyində x-in qiymətini tapın.</p>
+            </div>
+            <div class="answer-options mt-2">
+                <div class="option">A) 3</div>
+                <div class="option correct">B) 5</div>
+                <div class="option">C) 7</div>
+                <div class="option">D) 10</div>
+            </div>
+            <div class="answer-explanation">
+                <h6><i class="bi bi-lightbulb"></i> İzahat</h6>
+                <p>2x + 5 = 15 → 2x = 10 → x = 5</p>
+            </div>
+        </div>
+
+        <!-- Sual 2 -->
+        <div class="question-item" data-id="2">
+            <div class="question-number">Sual 2</div>
+            <div class="question-text">
+                <p>Düzbucaqlının uzunluğu 12 sm, eni isə uzunluğundan 4 sm qısadır. Sahəni tapın.</p>
+            </div>
+            <div class="question-image mt-2">
+                <img src="https://via.placeholder.com/400x200?text=Düzbucaqlı+Şəkli" class="img-fluid rounded" alt="Düzbucaqlı şəkli">
+            </div>
+            <div class="answer-options mt-2">
+                <div class="option">A) 48 sm²</div>
+                <div class="option">B) 64 sm²</div>
+                <div class="option correct">C) 96 sm²</div>
+                <div class="option">D) 128 sm²</div>
+            </div>
+            <div class="answer-explanation">
+                <h6><i class="bi bi-lightbulb"></i> İzahat</h6>
+                <p>Ən = 12 - 4 = 8 sm. Sahə = Uzunluq × En = 12 × 8 = 96 sm²</p>
+            </div>
+        </div>
+
+        <!-- Yeni suallar bura əlavə oluna bilər -->
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+      // Kitab görünüşü toggle
+      $('#toggleBookView').click(function () {
+        $('body').toggleClass('book-view');
+        $(this).find('i').toggleClass('bi-columns bi-layout-sidebar-inset');
+        localStorage.setItem('bookView', $('body').hasClass('book-view'));
+      });
+
+      if (localStorage.getItem('bookView') === 'true') {
+        $('body').addClass('book-view');
+        $('#toggleBookView').find('i').removeClass('bi-columns').addClass('bi-layout-sidebar-inset');
+      }
+
+      // Çap
+      $('#printQuestions').click(function () {
+        $('#toggleBookView').addClass('d-none');
+        window.print();
+        setTimeout(() => {
+          $('#toggleBookView').removeClass('d-none');
+        }, 500);
+      });
+
+      // Axtarış
+      $('#searchInput').on('input', function () {
+        let searchTerm = $(this).val().toLowerCase();
+        $('.question-item').each(function () {
+          let questionText = $(this).find('.question-text').text().toLowerCase();
+          $(this).toggle(questionText.includes(searchTerm));
+        });
+      });
+
+      // Aralığa görə süzgəc
+       $('#filterBtn').click(function () {
+        let fromVal = $('#fromQuestion').val();
+        let toVal = $('#toQuestion').val();
+
+        // Əgər hər iki input boşdursa, hamısını göstər
+        if (!fromVal && !toVal) {
+            $('.question-item').show();
+            return;
+        }
+
+        let from = fromVal ? parseInt(fromVal) : 1;
+        let to = toVal ? parseInt(toVal) : Number.MAX_SAFE_INTEGER;
+
+        $('.question-item').each(function () {
+            let id = parseInt($(this).attr('data-id'));
+            $(this).toggle(id >= from && id <= to);
+        });
+    });
+
+    });
+</script>

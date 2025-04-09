@@ -1,0 +1,194 @@
+﻿
+:root {
+    --primary-color: #4361ee;
+    --secondary-color: #3f37c9;
+    --accent-color: #4895ef;
+    --text-color: #2b2d42;
+    --light-bg: #f8f9fa;
+    --border-radius: 10px;
+    --box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.7;
+    color: var(--text-color);
+    background-color: #f5f7fa;
+}
+
+.terms-header {
+    background: linear-gradient(135deg, #3a0ca3 0%, #4361ee 100%);
+    color: white;
+    padding: 6rem 0 5rem;
+    margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    border-radius:12px;
+}
+
+    .terms-header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.1) 0%, transparent 25%), radial-gradient(circle at 70% 80%, rgba(255,255,255,0.1) 0%, transparent 25%);
+    }
+
+    .terms-header .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    .terms-header h1 {
+        font-size: 3.2rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        margin-bottom: 1rem;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .terms-header h1 i {
+            font-size: 2.8rem;
+            margin-right: 1rem;
+            color: #4cc9f0;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+    .terms-header .lead {
+        font-size: 1.4rem;
+        max-width: 700px;
+        margin: 0 auto;
+        opacity: 0.9;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    /* Dekorativ elementlər */
+    .terms-header .decor {
+        position: absolute;
+        opacity: 0.1;
+    }
+
+    .terms-header .decor-1 {
+        top: 20%;
+        left: 10%;
+        font-size: 8rem;
+        transform: rotate(-15deg);
+    }
+
+    .terms-header .decor-2 {
+        bottom: 10%;
+        right: 10%;
+        font-size: 10rem;
+        transform: rotate(25deg);
+    }
+
+/* Responsivlik */
+@media (max-width: 768px) {
+    .terms-header {
+        padding: 4rem 0;
+    }
+
+        .terms-header h1 {
+            font-size: 2.2rem;
+            flex-direction: column;
+        }
+
+            .terms-header h1 i {
+                font-size: 2rem;
+                margin-right: 0;
+                margin-bottom: 0.5rem;
+            }
+
+        .terms-header .lead {
+            font-size: 1.1rem;
+            padding: 0 1rem;
+        }
+
+        .terms-header .decor {
+            display: none;
+        }
+}
+.terms-container {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 3rem;
+    margin-bottom: 3rem;
+}
+
+.terms-title {
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+}
+
+.section-title {
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin-top: 2.5rem;
+    margin-bottom: 1.2rem;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+    .section-title:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.3em;
+        height: 1em;
+        width: 5px;
+        background: var(--accent-color);
+        border-radius: 5px;
+    }
+
+.highlight-box {
+    background-color: var(--light-bg);
+    border-left: 4px solid var(--accent-color);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.terms-list {
+    padding-left: 1.2rem;
+}
+
+    .terms-list li {
+        margin-bottom: 0.8rem;
+        position: relative;
+        padding-left: 1.5rem;
+    }
+
+        .terms-list li:before {
+            content: "•";
+            color: var(--accent-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+.update-info {
+    text-align: right;
+    font-style: italic;
+    color: #6c757d;
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+@media (max-width: 768px) {
+    .terms-container {
+        padding: 1.5rem;
+    }
+
+    .terms-header {
+        padding: 2.5rem 0;
+    }
+}
