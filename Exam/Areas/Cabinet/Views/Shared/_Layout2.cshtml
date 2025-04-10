@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Exam.DAL
+@using Microsoft.AspNetCore.Http
+@inject AppDbContext _context
+@{
     // Get the serialized user from session
     var userId = Context.Session.GetString("User");
     var username = "İstifadəçi"; // Default value
@@ -7,7 +10,7 @@
     if (userId != null)
     {
         // Deserialize the JSON to User object
-        var person = _context.User.where(x=>x.id == userId);
+        var person = _context.Users.FirstOrDefault(x => x.Id.ToString() == userId);
         if (person != null)
         {
             username = person.FullName;
@@ -65,9 +68,21 @@
                         </a>
                     </li>
                     <li class="@(ViewContext.RouteData.Values["Page"]?.ToString() == "/Tarifler" ? "active" : "")">
-                        <a asp-area="Cabinet" asp-controller="Tarifs" asp-action="Index">
+                        <a asp-area="Cabinet" asp-controller="Tariff" asp-action="Index">
                             <i class="bi bi-credit-card"></i>
                             <span>Tariflər</span>
+                        </a>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Page"]?.ToString() == "/Promocode" ? "active" : "")">
+                        <a asp-area="Cabinet" asp-controller="Promocode" asp-action="Index">
+                            <i class="bi bi bi-percent"></i>
+                            <span>Promokod</span>
+                        </a>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Page"]?.ToString() == "/Balance" ? "active" : "")">
+                        <a asp-area="Cabinet" asp-controller="Balance" asp-action="Index">
+                            <i class="bi bi-wallet2"></i>
+                            <span>Balans</span>
                         </a>
                     </li>
                     <li class="@(ViewContext.RouteData.Values["Page"]?.ToString() == "/Account" ? "active" : "")">

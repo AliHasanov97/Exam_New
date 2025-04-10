@@ -1,0 +1,110 @@
+﻿@model List<Exam.Models.Tranzaction>
+@{
+    ViewData["Title"] = "Son Ödənişlər";
+    ViewData["PageTitle"] = "Ödəniş Tarixçəsi";
+    ViewData["PageIcon"] = "bi-wallet2";
+    ViewData["Progress"] = "100";
+
+    // Calculate totals
+    var currentBalance = Model.LastOrDefault()?.Balance ?? 0;
+    var totalDiscount = Model.Sum(t => t.DiscountAmount);
+}
+
+<div class="card glassmorphism-card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h3><i class="bi bi-wallet2"></i> Ödəniş Tarixçəsi</h3>
+        <div>
+            <button class="btn btn-primary btn-sm">
+                <i class="bi bi-download"></i> Export
+            </button>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Tarix</th>
+                        <th>Əməliyyat</th>
+                        <th>Təsvir</th>
+                        <th>Növ</th>
+                        <th>Endirim</th>
+                        <th>Məbləğ</th>
+                        <th>Balans</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.OrderByDescending(t => t.DateTime))
+                    {
+                        var isExpense = item.FinancialOperations == "Expence";
+                        var hasDiscount = item.DiscountPercent > 0;
+
+                        <tr>
+                            <td>@item.DateTime.ToString("dd.MM.yyyy HH:mm")</td>
+                            <td>
+                                <i class="bi @item.Icon"></i> @item.Title
+                            </td>
+                            <td>@item.Description</td>
+                            <td>
+                                <span class="badge @(isExpense ? "bg-danger" : "bg-success")">
+                                    @(isExpense ? "Çıxış" : "Daxilolma")
+                                </span>
+                            </td>
+                            <td class="@(hasDiscount ? "text-success" : "text-muted")">
+                                @if (hasDiscount)
+                                {
+                                    <i class="bi bi-percent"></i> @($"{item.DiscountPercent}% ({item.DiscountAmount.ToString("0.00")} AZN)")
+                                }
+                                else
+                                {
+                                    @:-
+                                }
+                            </td>
+                            <td class="@(isExpense ? "text-danger" : "text-success")">
+                                @if (hasDiscount && item.OriginalAmount.HasValue)
+                                {
+                                    <span class="original-price">
+                                        @item.OriginalAmount.Value.ToString("0.00") AZN
+                                    </span>
+                                }
+                                @(isExpense ? "-" : "+")@item.Amount.ToString("0.00") AZN
+                            </td>
+                            <td>@item.Balance?.ToString("0.00") AZN</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+@section Styles {
+    <style>
+        .table th {
+            font-weight: 500;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #6c757d;
+        }
+
+        .table td {
+            vertical-align: middle;
+        }
+
+        .badge {
+            font-weight: 500;
+            padding: 4px 8px;
+            font-size: 0.75rem;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #6c757d;
+            margin-right: 5px;
+            font-size: 0.85em;
+            opacity: 0.7;
+        }
+    </style>
+}

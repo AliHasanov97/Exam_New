@@ -150,28 +150,87 @@ namespace Exam.Controllers
                 }
             }
 
-
             var user = new User
             {
                 FullName = model.FullName,
                 Email = model.Email,
-                Balance = 5,
+                Balance = 0,
                 Active = true,
                 Picture = imagePath,
                 Tranzactions = new List<Tranzaction>
-                    {
-                        new Tranzaction
-                        {
-                            Amount = 0,
-                            DateTime = DateTime.Now,
-                            Title = "Qeydiyyat zamanı balans",
-                            Description = "Saytı test etməniz üçün",
-                            FinancialOperations = "Deposit",
-                            Icon = "fa-solid fa-plus",
-                            Balance = 5,
-                        }
-                    }
+    {
+        // Initial bonus deposit
+        new Tranzaction
+        {
+            Id = Guid.NewGuid(),
+            Amount = 10,
+            DateTime = DateTime.UtcNow,
+            Title = "Qeydiyyat bonusu",
+            Description = "Yeni qeydiyyatdan keçdiyiniz üçün bonus balans",
+            FinancialOperations = "Deposit",
+            Icon = "bi-gift",
+            Balance = 0,
+            DiscountPercent = 0,
+            DiscountAmount = 0
+        },
+        
+        // Sample expense with discount (Premium subscription)
+        new Tranzaction
+        {
+            Id = Guid.NewGuid(),
+            Amount = 2,
+            OriginalAmount = 4,
+            DateTime = DateTime.UtcNow.AddSeconds(10),
+            Title = "Premium abunə",
+            Description = "1 aylıq premium abunə (50% endirim)",
+            FinancialOperations = "Expence",
+            Icon = "bi-crown",
+            Balance = 0, // Will be updated after calculation
+            DiscountPercent = 50,
+            DiscountAmount = 2
+        },
+       
+    },
+                Notifications = new List<Notification>
+    {
+        new Notification
+        {
+            Id = Guid.NewGuid(),
+            Icon = "bi-info-circle",
+            Title = "Xoş gəlmisiniz",
+            Message = "Xidmətlərimizdən yararlanmağınıza şadıq!",
+            IsRead = false,
+            CreatedAt = DateTime.Now
+        },
+        new Notification
+        {
+            Id = Guid.NewGuid(),
+            Icon = "bi-percent",
+            Title = "Xüsusi endirim",
+            Message = "Yeni istifadəçi endirimi - ilk ödənişinizdə 10% endirim!",
+            IsRead = false,
+            CreatedAt = DateTime.Now
+        }
+    }
             };
+
+            // Calculate balances for each transaction
+            decimal runningBalance = user.Balance;
+            foreach (var transaction in user.Tranzactions.OrderBy(t => t.DateTime))
+            {
+                if (transaction.FinancialOperations == "Deposit")
+                {
+                    runningBalance += transaction.Amount;
+                }
+                else // Expence
+                {
+                    runningBalance -= transaction.Amount;
+                }
+                transaction.Balance = runningBalance;
+            }
+
+            // Update user's current balance
+            user.Balance = runningBalance;
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();

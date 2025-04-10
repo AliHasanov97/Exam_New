@@ -11,6 +11,7 @@ namespace Exam.DAL
         public DbSet<CarouselSlide> CarouselSlides { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Tranzaction> Tranzactions { get; set; }
-
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Tariff> Tariff { get; set; }
     }
 }

@@ -12,7 +12,11 @@ namespace Exam.Models
         public required string Title { get; set; }
         public required string Description { get; set; }
         public required string FinancialOperations { get; set; }
-        public decimal? Amount { get; set; }
+        public decimal DiscountPercent { get; set; }
+        public decimal DiscountAmount { get; set; }
+        public decimal? OriginalAmount { get; set; } // endirimli olmayan qiymət
+        public decimal Amount { get; set; } // yekun məbləğ
+   
         public decimal? Balance { get; set; }
 
         [JsonIgnore]

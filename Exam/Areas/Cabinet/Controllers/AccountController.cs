@@ -1,27 +1,47 @@
-﻿using Exam.Models;
+﻿using Exam.DAL;
+using Exam.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace Exam.Areas.Cabinet.Controllers
 {
     [Area("Cabinet")]
     public class AccountController : Controller
     {
-        public IActionResult Index()
+        private readonly AppDbContext _context;
+
+        public AccountController(AppDbContext context)
         {
-            string? personJson = HttpContext.Session.GetString("User");
+            _context = context;
+        }
+        public async Task<IActionResult> Index()
+        {
+            string? userID = HttpContext.Session.GetString("User");
 
-            if (personJson != null)
+            if (userID != null && Guid.TryParse(userID, out Guid userIdGuid))
             {
-                // JSON-u User obyektinə deserializasiya edirik
-                User? person = JsonConvert.DeserializeObject<User>(personJson);
+                User? _user = await _context.Users
+                    .Where(u => u.Id == userIdGuid)
+                    .Include(x => x.Tranzactions)
+                    .FirstOrDefaultAsync();
 
-                if (person != null)
+                if (_user != null)
                 {
-                    return View(person);
+                    ViewData["Yükləmə"] = _user.Tranzactions?
+                        .Where(x => x.FinancialOperations == "Deposit")
+                        .Sum(x => x.Amount) ?? 0;
+
+                    ViewData["Ödəniş"] = _user.Tranzactions?
+                        .Where(x => x.FinancialOperations == "Expence")
+                        .Sum(x => x.Amount) ?? 0;
+
+                    Console.WriteLine(ViewData["Yükləmə"]);
+                    return View(_user);
                 }
             }
-            return View();
+            return Redirect("/");
         }
     }
 }

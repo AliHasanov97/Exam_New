@@ -7,6 +7,7 @@ namespace Exam.Models
     public class User
     {
         public Guid Id { get; set; } = Guid.NewGuid();
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public required string FullName { get; set; }
         public required string Picture { get; set; }
 
@@ -16,6 +17,8 @@ namespace Exam.Models
         public bool Active { get; set; }
 
         public List<Tranzaction>? Tranzactions { get; set; }
+        public List<Notification>? Notifications { get; set; }
+
 
     }
 }
