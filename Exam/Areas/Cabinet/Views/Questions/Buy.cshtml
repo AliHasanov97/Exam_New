@@ -1,0 +1,504 @@
+﻿@model BuyViewModel
+<div class="premium-access-container">
+    <!-- Premium Header -->
+    <div class="premium-header">
+        <!-- Notification Messages - Added above the header content -->
+        @if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
+        {
+            <div class="notification-success">
+                <div class="notification-content">
+                    <i class="bi bi-check-circle-fill"></i>
+                    <span>@TempData["SuccessMessage"]</span>
+                    <button class="notification-close" onclick="this.parentElement.parentElement.remove()">
+                        <i class="bi bi-x"></i>
+                    </button>
+                </div>
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
+        {
+            <div class="notification-error">
+                <div class="notification-content">
+                    <i class="bi bi-exclamation-circle-fill"></i>
+                    <span>@TempData["ErrorMessage"]</span>
+                    <button class="notification-close" onclick="this.parentElement.parentElement.remove()">
+                        <i class="bi bi-x"></i>
+                    </button>
+                </div>
+            </div>
+        }
+
+        <div class="header-content-wrapper">
+            <div class="premium-subject">
+                <div class="subject-icon">
+                    <i class="bi bi-calculator"></i>
+                </div>
+                <div class="subject-info">
+                    <h1>@Model.Subject.Name Test Bankı</h1>
+                    <p>Premium suallara giriş alın</p>
+                </div>
+            </div>
+            <div class="premium-balance">
+                <div class="balance-label">Balansınız:</div>
+                <div class="balance-value">@Model.User.Balance.ToString("0.00") <span>AZN</span></div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Notification Styles */
+        .notification-success, .notification-error {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .notification-success {
+            background-color: #e6f7ee;
+            border-left: 4px solid #48bb78;
+            color: #2a7d4a;
+        }
+
+        .notification-error {
+            background-color: #fde8e8;
+            border-left: 4px solid #f56565;
+            color: #c53030;
+        }
+
+        .notification-content {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+            .notification-content i {
+                margin-right: 10px;
+                font-size: 1.2rem;
+            }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            margin-left: 10px;
+            padding: 0;
+        }
+
+        /* Adjust header layout */
+        .premium-header {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-content-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+    </style>
+
+    <script>
+        // Auto-hide notifications after 5 seconds
+        document.addEventListener('DOMContentLoaded', function() {
+            const notifications = document.querySelectorAll('.notification-success, .notification-error');
+            notifications.forEach(notification => {
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    setTimeout(() => notification.remove(), 300);
+                }, 5000);
+            });
+        });
+    </script>
+
+    <!-- Premium Options -->
+    <div class="premium-options">
+        <!-- Daimi Giriş -->
+        <div class="premium-card permanent">
+            <div class="card-content">
+                <div class="current-price">
+                    <span class="amount">@Model.Subject.PriceForRead.ToString("0.00")</span>
+                    <span class="currency">AZN</span>
+                </div>
+                <h3>Tam Giriş Paketi</h3>
+                <div class="duration">∞ Daimi giriş</div>
+                <ul class="features">
+                    <li><i class="bi bi-check-circle-fill"></i> Bütün suallara limitsiz giriş</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Bütün mövzular daxildir</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Yeni əlavələr avtomatik aktiv</li>
+                    <li><i class="bi bi-check-circle-fill"></i> İstənilən vaxt istifadə</li>
+                </ul>
+                <form asp-action="Buy" method="post">
+                    <input type="hidden" name="id" value="@Model.Subject.Id" />
+                    <input type="hidden" name="accessType" value="permanent" />
+                    <button type="submit" class="premium-btn primary">
+                        <span>İndi alın</span>
+                        <i class="bi bi-arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Müvəqqəti Giriş -->
+        <div class="premium-card temporary">
+            <div class="card-content">
+                <div class="current-price">
+                    <span class="amount">@Model.Subject.PriceForRend.ToString("0.00")</span>
+                    <span class="currency">AZN</span>
+                </div>
+                <h3>Həftəlik Giriş</h3>
+                <div class="duration">7 günlük giriş</div>
+                <ul class="features">
+                    <li><i class="bi bi-check-circle-fill"></i> Gündə 50 sual limiti</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Aktivləşdirmədən sonra</li>
+                    <li><i class="bi bi-check-circle-fill"></i> İstənilən vaxt yeniləyə bilərsiniz</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Sərfəli qiymət</li>
+                </ul>
+                <form asp-action="Buy" method="post">
+                    <input type="hidden" name="id" value="@Model.Subject.Id" />
+                    <input type="hidden" name="accessType" value="temporary" />
+                    <button type="submit" class="premium-btn secondary">
+                        <span>İndi alın</span>
+                        <i class="bi bi-arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Premium Footer -->
+    <div class="premium-footer">
+        <div class="footer-icon">
+            <i class="bi bi-shield-lock"></i>
+        </div>
+        <p>Alınan giriş hüquqları təhlükəsiz şəkildə qorunur. Balansınız kifayət etmədikdə alış prosesi başa çatmayacaq.</p>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        /* Ümumi stilər */
+        .premium-access-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            color: #2d3748;
+            background: #f8fafc;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Başlıq hissəsi */
+        .premium-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .premium-subject {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .subject-icon {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.2rem;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.25);
+        }
+
+        .subject-info h1 {
+            font-weight: 700;
+            font-size: 2rem;
+            margin: 0;
+            color: #1a202c;
+            line-height: 1.2;
+        }
+
+        .subject-info p {
+            margin: 0.5rem 0 0;
+            color: #718096;
+            font-size: 1.1rem;
+        }
+
+        .premium-balance {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .balance-label {
+            font-size: 0.9rem;
+            color: #718096;
+            margin-bottom: 0.25rem;
+        }
+
+        .balance-value {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #4a5568;
+            display: flex;
+            align-items: baseline;
+        }
+
+            .balance-value span {
+                font-size: 1rem;
+                color: #718096;
+                margin-left: 0.25rem;
+            }
+
+        /* Cari qiymət */
+        .current-price {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 1.5rem;
+        }
+
+            .current-price .amount {
+                font-weight: 800;
+                font-size: 2.8rem;
+                color: #1a202c;
+                line-height: 1;
+            }
+
+        .permanent .current-price .amount {
+            color: #667eea;
+        }
+
+        .temporary .current-price .amount {
+            color: #48bb78;
+        }
+
+        .current-price .currency {
+            font-size: 1.8rem;
+            color: #718096;
+            margin-left: 0.25rem;
+        }
+
+        /* Kartlar */
+        .premium-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .premium-card {
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 2rem;
+        }
+
+            .premium-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+            }
+
+        .permanent {
+            border-left: 5px solid #667eea;
+        }
+
+        .temporary {
+            border-left: 5px solid #48bb78;
+        }
+
+        .premium-card h3 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin: 0 0 0.5rem;
+            color: #1a202c;
+        }
+
+        .duration {
+            color: #718096;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Xüsusiyyətlər */
+        .features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 2rem;
+        }
+
+            .features li {
+                margin-bottom: 0.75rem;
+                display: flex;
+                align-items: flex-start;
+                gap: 0.75rem;
+                line-height: 1.5;
+            }
+
+            .features i {
+                font-size: 1.1rem;
+                margin-top: 0.2rem;
+                flex-shrink: 0;
+            }
+
+        .permanent .features i {
+            color: #667eea;
+        }
+
+        .temporary .features i {
+            color: #48bb78;
+        }
+
+        /* Butonlar */
+        .premium-btn {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .premium-btn.primary {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            }
+
+            .premium-btn.secondary {
+                background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+                color: white;
+                box-shadow: 0 5px 15px rgba(72, 187, 120, 0.3);
+            }
+
+            .premium-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            }
+
+            .premium-btn.secondary:hover {
+                box-shadow: 0 8px 20px rgba(72, 187, 120, 0.4);
+            }
+
+            .premium-btn:disabled {
+                opacity: 0.7;
+                cursor: not-allowed;
+                transform: none;
+                box-shadow: none;
+                background: #a0aec0;
+            }
+
+        /* Footer */
+        .premium-footer {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .footer-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #f6ad55 0%, #dd6b20 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .premium-footer p {
+            margin: 0;
+            color: #4a5568;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        @@media (max-width: 768px) {
+            .premium-header {
+                flex-direction: column;
+                gap: 1.5rem;
+                align-items: flex-start;
+            }
+
+            .premium-options {
+                grid-template-columns: 1fr;
+            }
+
+            .subject-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.8rem;
+            }
+
+            .subject-info h1 {
+                font-size: 1.5rem;
+            }
+
+            .current-price .amount {
+                font-size: 2.2rem;
+            }
+
+            .current-price .currency {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const balance = parseFloat('@Model.User.Balance');
+            const buttons = document.querySelectorAll('.premium-btn');
+            const priceElements = document.querySelectorAll('.current-price .amount');
+
+            // Format prices
+            priceElements.forEach(el => {
+                const price = parseFloat(el.textContent);
+                el.textContent = price.toFixed(2);
+            });
+
+            // Check balance
+            buttons.forEach(btn => {
+                const form = btn.closest('form');
+                const priceElement = form.querySelector('.amount');
+                const price = parseFloat(priceElement.textContent);
+
+                if (price > balance) {
+                    btn.disabled = true;
+                    btn.innerHTML = '<span>Balansınız kifayət qədər deyil</span>';
+                }
+            });
+        });
+    </script>
+}

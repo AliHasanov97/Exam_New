@@ -1,12 +1,16 @@
 ﻿@{
     Layout = null;
 }
+@model List<Exam.Models.Question>
+@Html.AntiForgeryToken()
+
 <!DOCTYPE html>
 <html lang="az">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>İmtahan - Riyaziyyat</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
         :root {
             --primary: #6C5CE7;
@@ -31,10 +35,9 @@
             color: var(--dark);
             display: flex;
             min-height: 100vh;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
-        /* Sidebar Styles */
         .sidebar {
             width: 300px;
             background: white;
@@ -45,6 +48,8 @@
             position: fixed;
             height: 100vh;
             overflow-y: auto;
+            transition: transform 0.3s ease;
+            z-index: 1000;
         }
 
         .student-profile {
@@ -147,7 +152,6 @@
                 transform: translateY(-2px);
             }
 
-        /* Main Content Styles */
         .main-content {
             flex: 1;
             padding: 30px;
@@ -200,7 +204,6 @@
             transition: width 0.4s ease;
         }
 
-        /* Questions Styles */
         .question-card {
             background: white;
             border-radius: 12px;
@@ -281,39 +284,175 @@
             background: var(--primary);
             color: white;
         }
+
+        .explanation {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(0, 184, 148, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            z-index: 1001;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        /* Responsive Styles */
+        @@media screen and (max-width: 1200px) {
+            .sidebar
+
+        {
+            width: 260px;
+            padding: 20px;
+        }
+
+        .main-content {
+            margin-left: 260px;
+            width: calc(100% - 260px);
+            padding: 25px;
+        }
+
+        }
+
+        @@media screen and (max-width: 992px) {
+            .sidebar
+
+        {
+            transform: translateX(-100%);
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+        }
+
+        .main-content {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        .mobile-menu-toggle {
+            display: block;
+        }
+
+        .sidebar.active + .sidebar-overlay {
+            display: block;
+        }
+
+        .exam-title {
+            margin-top: 60px;
+        }
+
+        }
+
+        @@media screen and (max-width: 768px) {
+            .exam-title
+
+        {
+            font-size: 1.5rem;
+        }
+
+        .question-card {
+            padding: 20px;
+        }
+
+        .question-text {
+            font-size: 1rem;
+        }
+
+        .option {
+            padding: 12px 15px;
+        }
+
+        .timer {
+            font-size: 1.5rem;
+        }
+
+        }
+
+        @@media screen and (max-width: 576px) {
+            .student-avatar
+
+        {
+            width: 80px;
+            height: 80px;
+        }
+
+        .student-name {
+            font-size: 1rem;
+        }
+
+        .exam-status, .timer-container {
+            padding: 15px;
+        }
+
+        .question-card {
+            padding: 15px;
+        }
+
+        .option-letter {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+            font-size: 0.8rem;
+        }
+
+        .mobile-menu-toggle {
+            top: 15px;
+            left: 15px;
+            width: 36px;
+            height: 36px;
+        }
+
+        }
     </style>
 </head>
 <body>
-    <!-- Sidebar Container -->
-    <div class="sidebar">
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <i class="bi bi-list"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
         <div class="student-profile">
-            <img src="https://lh3.googleusercontent.com/a/ACg8ocKZw9JApUFT99ELwNaIBNnbAGB5jR-Xy0kaZihHsAqqbj66DC38=s400-c"
-                 alt="Tələbə" class="student-avatar">
-            <h3 class="student-name">Əli Hüseynov</h3>
+            <img src="@ViewBag.UserImage" alt="Tələbə" class="student-avatar">
+            <h3 class="student-name">@ViewBag.UserName</h3>
             <p class="student-id">Tələbə ID: ST20230045</p>
         </div>
 
         <div class="exam-status">
-            <div class="status-title">
-                <span>📊</span>
-                <span>İmtahan Statistikası</span>
-            </div>
-            <div class="status-item">
-                <span>Ümumi suallar:</span>
-                <span class="status-value">5</span>
-            </div>
-            <div class="status-item">
-                <span>Cavablandırılıb:</span>
-                <span class="status-value" id="answered-count">0</span>
-            </div>
-            <div class="status-item">
-                <span>Qalıb:</span>
-                <span class="status-value" id="remaining-count">5</span>
-            </div>
-            <div class="status-item">
-                <span>İşarələnib:</span>
-                <span class="status-value" id="flagged-count">0</span>
-            </div>
+            <div class="status-title">📊 İmtahan Statistikası</div>
+            <div class="status-item"><span>Ümumi suallar:</span> <span class="status-value">@Model.Count</span></div>
+            <div class="status-item"><span>Cavablandırılıb:</span> <span class="status-value" id="answered-count">0</span></div>
+            <div class="status-item"><span>Qalıb:</span> <span class="status-value" id="remaining-count">@Model.Count</span></div>
+            <div class="status-item"><span>İşarələnib:</span> <span class="status-value" id="flagged-count">0</span></div>
         </div>
 
         <div class="timer-container">
@@ -321,263 +460,215 @@
             <div class="timer" id="exam-timer">01:30:00</div>
         </div>
 
-        <button class="submit-btn" id="submit-exam">
-            İmtahanı Yekunla
-        </button>
+        <button class="submit-btn" id="submit-exam">İmtahanı Yekunla</button>
     </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <!-- Main Content -->
     <div class="main-content">
         <div class="exam-header">
-            <h1 class="exam-title">Riyaziyyat - Final İmtahanı</h1>
-            <p class="exam-description">Hər suala diqqətlə cavab verin. Birdən çox cavab seçimi yoxdur.</p>
+            <h1 class="exam-title">@ViewBag.ExamName İmtahanı</h1>
+            <p class="exam-description">Bu imtahanda cəmi @Model.Count sual var. Uğurlar!</p>
+        </div>
 
-            <div class="progress-container">
-                <div class="progress-text">
-                    <span>İrəliləyiş</span>
-                    <span id="progress-text">0/5 (0%)</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress-fill"></div>
-                </div>
+        <div class="progress-container">
+            <div class="progress-text">
+                <span>İmtahan irəliləyişi</span>
+                <span id="progress-text">0/@Model.Count (0%)</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
             </div>
         </div>
 
-        <!-- Question 1 -->
-        <div class="question-card">
-            <div class="question-header">
-                <div class="question-number">Sual 1</div>
-                <div class="question-flag">🏴</div>
-            </div>
-            <div class="question-text">
-                Düzbucaqlı üçbucağın katetləri 6 sm və 8 sm-dir. Hipotenuzun uzunluğu neçə sm-dir?
-            </div>
-            <div class="options-grid">
-                <div class="option">
-                    <div class="option-letter">A</div>
-                    <div class="option-text">10 sm</div>
+        <!-- Questions List -->
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var question = Model[i];
+            <div class="question-card" data-question-id="@question.Id">
+                <div class="question-header">
+                    <span class="question-number">Sual @(i + 1)</span>
+                    <span class="question-flag" data-flagged="false">🏴</span>
                 </div>
-                <div class="option">
-                    <div class="option-letter">B</div>
-                    <div class="option-text">12 sm</div>
-                </div>
-                <div class="option">
-                    <div class="option-letter">C</div>
-                    <div class="option-text">14 sm</div>
-                </div>
-                <div class="option">
-                    <div class="option-letter">D</div>
-                    <div class="option-text">16 sm</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Question 2 -->
-        <div class="question-card">
-            <div class="question-header">
-                <div class="question-number">Sual 2</div>
-                <div class="question-flag">🏴</div>
-            </div>
-            <div class="question-text">
-                30° bucağın radianla ifadəsi neçədir?
-            </div>
-            <div class="options-grid">
-                <div class="option">
-                    <div class="option-letter">A</div>
-                    <div class="option-text">π/3</div>
-                </div>
-                <div class="option">
-                    <div class="option-letter">B</div>
-                    <div class="option-text">π/6</div>
-                </div>
-                <div class="option">
-                    <div class="option-letter">C</div>
-                    <div class="option-text">π/4</div>
-                </div>
-                <div class="option">
-                    <div class="option-letter">D</div>
-                    <div class="option-text">π/2</div>
+                <p class="question-text">@question.QuestionText</p>
+                <div class="options-grid">
+                    @if (!string.IsNullOrEmpty(question.AnswerA))
+                    {
+                        <div class="option" data-option="A">
+                            <span class="option-letter">A</span>
+                            <span>@question.AnswerA</span>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(question.AnswerB))
+                    {
+                        <div class="option" data-option="B">
+                            <span class="option-letter">B</span>
+                            <span>@question.AnswerB</span>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(question.AnswerC))
+                    {
+                        <div class="option" data-option="C">
+                            <span class="option-letter">C</span>
+                            <span>@question.AnswerC</span>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(question.AnswerD))
+                    {
+                        <div class="option" data-option="D">
+                            <span class="option-letter">D</span>
+                            <span>@question.AnswerD</span>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(question.AnswerE))
+                    {
+                        <div class="option" data-option="E">
+                            <span class="option-letter">E</span>
+                            <span>@question.AnswerE</span>
+                        </div>
+                    }
                 </div>
             </div>
-        </div>
-
-        <!-- Question 3 -->
-        <div class="question-card">
-            <div class="question-header">
-                <div class="question-number">Sual 3</div>
-                <div class="question-flag">🏴</div>
-            </div>
-            <div class="question-text">
-                2x² - 8x + 6 = 0 tənliyinin həllər çoxluğu hansıdır?
-            </div>
-            <div class="options-grid">
-                <div class="option">
-                    <div class="option-letter">A</div>
-                    <div class="option-text">{1, 2}</div>
-                </div>
-                <div class="option">
-                    <div class="option-letter">B</div>
-                    <div class="option-text">{2, 3}</div>
-                </div>
-                <div class="option">
-                    <div class="option-letter">C</div>
-                    <div class="option-text">{1, 3}</div>
-                </div>
-                <div class="option">
-                    <div class="option-letter">D</div>
-                    <div class="option-text">{3, 4}</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Question 4 -->
-        <div class="question-card">
-            <div class="question-header">
-                <div class="question-number">Sual 4</div>
-                <div class="question-flag">🏴</div>
-            </div>
-            <div class="question-text">
-                Hansı funksiya tək funksiyadır?
-            </div>
-            <div class="options-grid">
-                <div class="option">
-                    <div class="option-letter">A</div>
-                    <div class="option-text">f(x) = x²</div>
-                </div>
-                <div class="option">
-                    <div class="option-letter">B</div>
-                    <div class="option-text">f(x) = cos(x)</div>
-                </div>
-                <div class="option">
-                    <div class="option-letter">C</div>
-                    <div class="option-text">f(x) = x³</div>
-                </div>
-                <div class="option">
-                    <div class="option-letter">D</div>
-                    <div class="option-text">f(x) = |x|</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Question 5 -->
-        <div class="question-card">
-            <div class="question-header">
-                <div class="question-number">Sual 5</div>
-                <div class="question-flag">🏴</div>
-            </div>
-            <div class="question-text">
-                Ədədi ortası 8 olan 5 ədədə bir ədəd daha əlavə edildikdə yeni orta 9 olur. Əlavə edilən ədəd neçədir?
-            </div>
-            <div class="options-grid">
-                <div class="option">
-                    <div class="option-letter">A</div>
-                    <div class="option-text">12</div>
-                </div>
-                <div class="option">
-                    <div class="option-letter">B</div>
-                    <div class="option-text">13</div>
-                </div>
-                <div class="option">
-                    <div class="option-letter">C</div>
-                    <div class="option-text">14</div>
-                </div>
-                <div class="option">
-                    <div class="option-letter">D</div>
-                    <div class="option-text">15</div>
-                </div>
-            </div>
-        </div>
+        }
     </div>
 
     <script>
-        // Timer functionality
-        function startTimer(duration, display) {
-            let timer = duration, hours, minutes, seconds;
-            const interval = setInterval(function () {
-                hours = parseInt(timer / 3600, 10);
-                minutes = parseInt((timer % 3600) / 60, 10);
-                seconds = parseInt(timer % 60, 10);
+        // Mobile menu functionality
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
 
-                hours = hours < 10 ? "0" + hours : hours;
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
+        mobileMenuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            sidebarOverlay.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
+        });
 
-                display.textContent = hours + ":" + minutes + ":" + seconds;
+        sidebarOverlay.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+            sidebarOverlay.style.display = 'none';
+        });
 
-                if (--timer < 0) {
-                    clearInterval(interval);
-                    alert("Vaxt bitdi! İmtahan avtomatik olaraq yekunlaşdırılacaq.");
-                    window.location.href = "results.html";
-                }
-            }, 1000);
-        }
-
-        // Initialize when window loads
-        window.onload = function () {
-            const ninetyMinutes = 60 * 90; // 90 minutes in seconds
-            const display = document.querySelector('#exam-timer');
-            startTimer(ninetyMinutes, display);
-
-            // Initialize progress
-            updateProgress();
-        };
-
-        // Option selection
+        // Question selection
         document.querySelectorAll('.option').forEach(option => {
-            option.addEventListener('click', function() {
-                // Remove selected class from siblings in this question only
-                const question = this.closest('.question-card');
-                question.querySelectorAll('.option').forEach(sibling => {
-                    sibling.classList.remove('selected');
-                });
-
-                // Add selected class to clicked item
+            option.addEventListener('click', function () {
+                const card = this.closest('.question-card');
+                card.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
                 this.classList.add('selected');
-
-                // Update progress
                 updateProgress();
             });
         });
 
-        // Flag question
+        // Flagging questions
         document.querySelectorAll('.question-flag').forEach(flag => {
-            flag.addEventListener('click', function(e) {
-                e.stopPropagation();
-                this.textContent = this.textContent === '🏴' ? '🚩' : '🏴';
+            flag.addEventListener('click', function () {
+                const isFlagged = this.getAttribute('data-flagged') === 'true';
+                this.setAttribute('data-flagged', !isFlagged);
+                this.textContent = isFlagged ? '🏴' : '🚩';
                 updateFlaggedCount();
             });
         });
 
-        // Update progress
+        // Update progress stats
         function updateProgress() {
             const answered = document.querySelectorAll('.option.selected').length;
             const total = document.querySelectorAll('.question-card').length;
             const remaining = total - answered;
-            const percentage = Math.round((answered / total) * 100);
+            const percent = Math.round((answered / total) * 100);
 
-            // Update progress bar
-            document.getElementById('progress-fill').style.width = `${percentage}%`;
-            document.getElementById('progress-text').textContent =
-                `${answered}/${total} (${percentage}%)`;
-
-            // Update sidebar counts
+            document.getElementById('progress-fill').style.width = percent + '%';
+            document.getElementById('progress-text').textContent = `${answered}/${total} (${percent}%)`;
             document.getElementById('answered-count').textContent = answered;
             document.getElementById('remaining-count').textContent = remaining;
         }
 
-        // Update flagged count
         function updateFlaggedCount() {
             const flagged = document.querySelectorAll('.question-flag[data-flagged="true"]').length;
             document.getElementById('flagged-count').textContent = flagged;
         }
 
+        // Timer functionality
+        function startTimer(duration, display) {
+            let timer = duration, hours, minutes, seconds;
+            const interval = setInterval(() => {
+                hours = String(Math.floor(timer / 3600)).padStart(2, '0');
+                minutes = String(Math.floor((timer % 3600) / 60)).padStart(2, '0');
+                seconds = String(timer % 60).padStart(2, '0');
+
+                display.textContent = `${hours}:${minutes}:${seconds}`;
+
+                if (--timer < 0) {
+                    clearInterval(interval);
+                    alert("Vaxt bitdi!");
+                    submitExam();
+                }
+            }, 1000);
+        }
+
         // Submit exam
-        document.getElementById('submit-exam').addEventListener('click', function() {
-            if(confirm("İmtahanı tamamlamaq istədiyinizə əminsiniz?")) {
-                // Redirect to results page
-                window.location.href = "results.html";
+        function submitExam() {
+            const answers = [];
+            document.querySelectorAll('.question-card').forEach(card => {
+                const questionId = card.getAttribute('data-question-id');
+                const selected = card.querySelector('.option.selected');
+                answers.push({
+                    QuestionId: questionId,
+                    SelectedOption: selected ? selected.getAttribute('data-option') : null
+                });
+            });
+
+            fetch('@Url.Action("SubmitExam", "Exam", new { area = "Cabinet" })', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                },
+                body: JSON.stringify({
+                    examSessionId: '@ViewBag.ExamSessionId',
+                    answers: answers
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    window.location.href = data.redirectUrl;
+                } else {
+                    alert("Xəta baş verdi: " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Server xətası:", error);
+                alert("İmtahan göndərilərkən xəta baş verdi: " + error.message);
+            });
+        }
+
+        // Initialize on load
+        window.onload = function () {
+            const duration = 5400; // 1 saat 30 dəqiqə
+            const display = document.getElementById('exam-timer');
+            startTimer(duration, display);
+
+            document.getElementById('submit-exam').addEventListener('click', function (e) {
+                e.preventDefault();
+                if (confirm("İmtahanı yekunlaşdırmaq istədiyinizə əminsinizmi?")) {
+                    submitExam();
+                }
+            });
+
+            // Close sidebar when submitting on mobile
+            if (window.innerWidth <= 992) {
+                document.getElementById('submit-exam').addEventListener('click', function() {
+                    sidebar.classList.remove('active');
+                    sidebarOverlay.style.display = 'none';
+                });
             }
-        });
+        };
     </script>
 </body>
 </html>

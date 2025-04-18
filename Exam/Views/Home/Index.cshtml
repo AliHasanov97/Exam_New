@@ -4,17 +4,17 @@
 }
 
 <section class="Carousel">
-        <div id="luxuryCarousel" class="carousel slide" data-bs-ride="carousel"
-         style="overflow: hidden; background: #000; max-height: 600px;">
+    <div id="luxuryCarousel" class="carousel slide" data-bs-ride="carousel"
+    style="overflow: hidden; background: #000; max-height: 600px;">
 
         <!-- Indicator Dots -->
         <div class="carousel-indicators">
             @for (int i = 0; i < Model.Sliders.Count; i++)
             {
                 <button type="button" data-bs-target="#luxuryCarousel"
-                        data-bs-slide-to="@i"
-                        class="@(i == 0 ? "active" : "")"
-                        aria-label="Slide @(i+1)"></button>
+                data-bs-slide-to="@i"
+                class="@(i == 0 ? "active" : "")"
+                aria-label="Slide @(i+1)"></button>
             }
         </div>
 
@@ -25,20 +25,20 @@
                 <div class="carousel-item h-100 @(slide == Model.Sliders.First() ? "active" : "")">
                     <!-- Gradient Overlay -->
                     <div class="position-absolute w-100 h-100"
-                         style="background: linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%); z-index: 1;"></div>
+                    style="background: linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%); z-index: 1;"></div>
 
                     <!-- Image with Lazy Loading -->
                     <img src="@slide.ImageUrl"
-                         class="d-block w-100 h-100 object-fit-cover"
-                         alt="@slide.Title"
-                         loading="lazy">
+                    class="d-block w-100 h-100 object-fit-cover"
+                    alt="@slide.Title"
+                    loading="lazy">
 
                     <!-- Caption with Animation -->
                     <div class="carousel-caption container d-flex flex-column justify-content-center h-100"
-                         style="z-index: 2; padding-bottom: 8rem;">
+                    style="z-index: 2; padding-bottom: 8rem;">
                         <h5 class="display-3 fw-bold mb-4 text-white animate__animated animate__fadeInDown">@slide.Title</h5>
                         <p class="text-white fs-4 mb-5 animate__animated animate__fadeInUp animate__delay-1s"
-                           style="max-width: 600px; text-shadow: 2px 2px 5px rgba(0,0,0,0.5);">@slide.Description</p>
+                        style="max-width: 600px; text-shadow: 2px 2px 5px rgba(0,0,0,0.5);">@slide.Description</p>
                         <div class="animate__animated animate__fadeInUp animate__delay-2s">
                             <button class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill">Ətraflı</button>
                         </div>
@@ -64,10 +64,10 @@
             <div class="col-lg-6 mb-5 mb-lg-0">
                 <div class="about-image-container position-relative">
                     <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf"
-                         alt="Bizim komandamız"
-                         class="img-fluid rounded-4 main-image shadow-lg">
+                    alt="Bizim komandamız"
+                    class="img-fluid rounded-4 main-image shadow-lg">
                     <div class="position-absolute bottom-0 end-0 bg-primary p-4 rounded-3 shadow-sm d-none d-md-block"
-                         style="transform: translate(10%,10%); z-index: 2; max-width: 200px;">
+                    style="transform: translate(10%,10%); z-index: 2; max-width: 200px;">
                         <h3 class="text-white mb-0">10+</h3>
                         <p class="text-white mb-0">İllik təcrübə</p>
                     </div>
@@ -262,80 +262,46 @@
         </div>
     </div>
 </section>
-<section id="Staff" class="staff-section">
+<section id="Staff" class="admin-section">
     <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">Komandamız</h2>
-            <p class="section-subtitle">Peşəkarlar komandası ilə tanış olun</p>
-        </div>
-
-        <div class="staff-grid">
-            <!-- Staff 1 -->
-            <div class="staff-card">
-                <div class="staff-image">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Əliyev Kərim">
-                </div>
-                <div class="staff-info">
-                    <h3 class="staff-name">Əliyev Kərim</h3>
-                    <p class="staff-position">Veb Developer</p>
-                    <div class="staff-social">
-                        <a href="#"><i class="bi bi-linkedin"></i></a>
-                        <a href="#"><i class="bi bi-github"></i></a>
-                        <a href="#"><i class="bi bi-envelope"></i></a>
-                    </div>
-                </div>
+        <div class="admin-card">
+            <div class="admin-header">
+                <h2>Proqramlaşdırma & İdarəetmə</h2>
+                <div class="decorative-line"></div>
             </div>
 
-            <!-- Staff 2 -->
-            <div class="staff-card">
-                <div class="staff-image">
-                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Hüseynova Aygün">
+            <div class="admin-content">
+                <div class="admin-image">
+                    <img src="https://lh3.googleusercontent.com/a/ACg8ocKZw9JApUFT99ELwNaIBNnbAGB5jR-Xy0kaZihHsAqqbj66DC38=s400-c" alt="Həsənov Əli">
+                    <div class="image-frame"></div>
                 </div>
-                <div class="staff-info">
-                    <h3 class="staff-name">Hüseynova Aygün</h3>
-                    <p class="staff-position">UX/UI Dizayner</p>
-                    <div class="staff-social">
-                        <a href="#"><i class="bi bi-linkedin"></i></a>
-                        <a href="#"><i class="bi bi-dribbble"></i></a>
-                        <a href="#"><i class="bi bi-envelope"></i></a>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Staff 3 -->
-            <div class="staff-card">
-                <div class="staff-image">
-                    <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Məmmədov Orxan">
-                </div>
-                <div class="staff-info">
-                    <h3 class="staff-name">Məmmədov Orxan</h3>
-                    <p class="staff-position">SEO Mütəxəssis</p>
-                    <div class="staff-social">
-                        <a href="#"><i class="bi bi-linkedin"></i></a>
-                        <a href="#"><i class="bi bi-twitter"></i></a>
-                        <a href="#"><i class="bi bi-envelope"></i></a>
+                <div class="admin-info">
+                    <h3>Həsənov Əli</h3>
+                    <p class="admin-title">Full-stack Developer & Sistem Admini</p>
+                    <p class="text-muted">İş axtarıram</p>
+                    <div class="admin-details">
+                        <div class="detail-item">
+                            <i class="bi bi-award"></i>
+                            <span>6+ ay təcrübə</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="bi bi-code-square"></i>
+                            <span>3+ layihə</span>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-            <!-- Staff 4 -->
-            <div class="staff-card">
-                <div class="staff-image">
-                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Qasımova Ləman">
-                </div>
-                <div class="staff-info">
-                    <h3 class="staff-name">Qasımova Ləman</h3>
-                    <p class="staff-position">Projekt Meneceri</p>
-                    <div class="staff-social">
-                        <a href="#"><i class="bi bi-linkedin"></i></a>
-                        <a href="#"><i class="bi bi-facebook"></i></a>
-                        <a href="#"><i class="bi bi-envelope"></i></a>
+                    <div class="admin-contact">
+                        <a href="mailto:example@mail.com" class="contact-btn email">
+                            <i class="bi bi-envelope"></i> Email
+                        </a>
+                        <a href="tel:+994501234567" class="contact-btn phone">
+                            <i class="bi bi-telephone"></i> Zəng et
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-<!-- Bootstrap Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">

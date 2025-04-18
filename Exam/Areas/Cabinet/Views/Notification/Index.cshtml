@@ -31,7 +31,7 @@
                             <p>@notification.Message</p>
                             <span class="notification-time">
                                 @{
-                                    var timeDifference = DateTime.UtcNow - notification.CreatedAt;
+                                    var timeDifference =  DateTime.Now - notification.CreatedAt;
                                     var timeText = timeDifference.TotalMinutes < 60
                                     ? $"{(int)timeDifference.TotalMinutes} dəqiqə əvvəl"
                                     : timeDifference.TotalHours < 24
@@ -73,7 +73,7 @@
                             <p>@notification.Message</p>
                             <span class="notification-time">
                                 @{
-                                    var timeDifference = DateTime.UtcNow - notification.CreatedAt;
+                                    var timeDifference =  DateTime.Now - notification.CreatedAt;
                                     var timeText = timeDifference.TotalMinutes < 60
                                     ? $"{(int)timeDifference.TotalMinutes} dəqiqə əvvəl"
                                     : timeDifference.TotalHours < 24

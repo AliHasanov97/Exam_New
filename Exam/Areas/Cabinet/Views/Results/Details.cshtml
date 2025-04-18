@@ -1,4 +1,14 @@
-﻿
+﻿@model Exam.Models.ExamSession
+
+@{
+    var examResults = Model.Results;
+    var totalCount = examResults?.Count;
+    var correctCount = examResults?.Count(x => x.YouAnswered == x.Question?.CorrectAnswer);
+    var wrongCount = examResults?.Count(x => x.YouAnswered != x.Question?.CorrectAnswer && x.YouAnswered is not null);
+    var unansweredCount = examResults?.Count(x => x.YouAnswered == null);
+    var score = (double)correctCount * 100 / totalCount;
+    int QuestionNumber = 1;
+}
 
 <div class="dashboard-section">
     <div class="section-title">
@@ -16,179 +26,234 @@
 
     <!-- Exam Header -->
     <div class="exam-header" style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: var(--neu-shadow);">
-        <div class="row align-items-center">
-            <div class="col-md-8">
-                <h4>Riyaziyyat - Final İmtahanı</h4>
+        <div class="row align-items-center w-100">
+            <div class="col-8">
+                <h4>@Model.Subject?.Name</h4>
                 <div class="exam-meta">
-                    <span class="me-3"><i class="bi bi-calendar"></i> 15 Yanvar 2023</span>
-                    <span class="me-3"><i class="bi bi-clock"></i> 90 dəqiqə</span>
-                    <span><i class="bi bi-question-circle"></i> 25 sual</span>
+                    <span class="me-3"><i class="bi bi-calendar"></i> @Model.DateTime.ToString("dd MMMM yyyy")</span>
+                    <span class="me-3"><i class="bi bi-clock"></i> @Model.ExamCompletion.Minutes dəqiqə</span>
+                    <span><i class="bi bi-question-circle"></i> @totalCount sual</span>
                 </div>
             </div>
-            <div class="col-md-4 text-end">
-                <div class="exam-score">
-                    <div class="score-circle" style="width: 80px; height: 80px; background: var(--success);">
-                        <span style="font-size: 1.5rem; font-weight: 600;">92</span>
-                    </div>
-                    <div class="score-text">
-                        <span>Ümumi bal</span>
-                        <strong>92/100</strong>
+            @if (Model.Results?.Count > 0)
+            {
+                <div class="col-4 text-end">
+                    <div class="exam-score d-flex align-items-center justify-content-end">
+                        <div class="score-circle me-3" style="width: 80px; height: 80px; background: var(--bs-success-bg-subtle); border: 3px solid var(--bs-success);">
+                            <span class="d-flex justify-content-center align-items-center h-100" style="font-size: 1.5rem; font-weight: 600; color: var(--bs-success);">@score</span>
+                        </div>
+                        <div class="score-text text-start">
+                            <span class="d-block text-muted small">Ümumi bal</span>
+                            <strong class="h4" style="color: var(--bs-success);">@score<small class="text-muted">/100</small></strong>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                <div class="col-4 text-end">
+                    <div class="exam-score d-flex align-items-center justify-content-end">
+                        <div class="score-circle me-3" style="width: 80px; height: 80px; background: var(--bs-danger-bg-subtle); border: 3px solid var(--bs-danger);">
+                            <span class="d-flex justify-content-center align-items-center h-100" style="font-size: 1.5rem; font-weight: 600; color: var(--bs-danger);">0</span>
+                        </div>
+                        <div class="score-text text-start">
+                            <span class="d-block text-muted small">Nəticə yoxdur</span>
+                            <strong class="h4" style="color: var(--bs-danger);">0<small class="text-muted">/100</small></strong>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
 
-    <!-- Performance Summary -->
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <div class="performance-card" style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; box-shadow: var(--neu-shadow);">
-                <h5><i class="bi bi-check-circle-fill text-success me-2"></i> Düzgün cavablar</h5>
-                <div class="performance-value">23</div>
-                <div class="performance-progress">
-                    <div class="progress" style="height: 8px;">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 92%"></div>
+    @if (Model.Results?.Count > 0)
+    {
+        <!-- Performance Summary -->
+        <div class="row mb-4 g-3">
+            <!-- Correct Answers Card -->
+            <div class="col-md-4">
+                <div class="performance-card card-hover h-100"
+                     style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; box-shadow: var(--neu-shadow); border-left: 4px solid var(--bs-success);">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="mb-0"><i class="bi bi-check-circle-fill text-success me-2"></i>Düzgün cavablar</h5>
+                        <span class="badge bg-success bg-opacity-10 text-success">@correctCount/@totalCount</span>
                     </div>
-                    <small>92% uğur</small>
+                    <div class="performance-value display-5 fw-bold mb-3" style="color: var(--bs-success);">@correctCount</div>
+                    <div class="performance-progress">
+                        @{
+                            var correctPercentage = (double)correctCount / totalCount * 100;
+                        }
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar bg-success" role="progressbar"
+                                 style="width: @correctPercentage%"
+                                 aria-valuenow="@correctPercentage"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100"></div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <small class="text-muted">0%</small>
+                            <small class="text-success fw-semibold">@correctPercentage% uğur</small>
+                            <small class="text-muted">100%</small>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="performance-card" style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; box-shadow: var(--neu-shadow);">
-                <h5><i class="bi bi-x-circle-fill text-danger me-2"></i> Yanlış cavablar</h5>
-                <div class="performance-value">2</div>
-                <div class="performance-progress">
-                    <div class="progress" style="height: 8px;">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: 8%"></div>
-                    </div>
-                    <small>8% səhv</small>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="performance-card" style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; box-shadow: var(--neu-shadow);">
-                <h5><i class="bi bi-dash-circle-fill text-warning me-2"></i> Cavabsız suallar</h5>
-                <div class="performance-value">0</div>
-                <div class="performance-progress">
-                    <div class="progress" style="height: 8px;">
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: 0%"></div>
-                    </div>
-                    <small>0% cavabsız</small>
-                </div>
-            </div>
-        </div>
-    </div>
 
-  
-    <!-- Questions and Answers -->
-    <div class="dashboard-section" style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; box-shadow: var(--neu-shadow);">
-        <h5 class="mb-4"><i class="bi bi-question-circle-fill text-primary me-2"></i> Sual və cavablar</h5>
+            <!-- Wrong Answers Card -->
+            <div class="col-md-4">
+                <div class="performance-card card-hover h-100"
+                     style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; box-shadow: var(--neu-shadow); border-left: 4px solid var(--bs-danger);">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="mb-0"><i class="bi bi-x-circle-fill text-danger me-2"></i>Yanlış cavablar</h5>
+                        <span class="badge bg-danger bg-opacity-10 text-danger">@wrongCount/@totalCount</span>
+                    </div>
+                    <div class="performance-value display-5 fw-bold mb-3" style="color: var(--bs-danger);">@wrongCount</div>
+                    <div class="performance-progress">
+                        @{
+                            var wrongPercentage = (double)wrongCount / totalCount * 100;
+                        }
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar bg-danger" role="progressbar"
+                                 style="width: @wrongPercentage%"
+                                 aria-valuenow="@wrongPercentage"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100"></div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <small class="text-muted">0%</small>
+                            <small class="text-danger fw-semibold">@wrongPercentage% səhv</small>
+                            <small class="text-muted">100%</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <!-- Question 1 (Correct) -->
-        <div class="question-item correct">
-            <div class="question-header">
-                <span class="question-number">1.</span>
-                <span class="question-status"><i class="bi bi-check-circle-fill text-success"></i> Düzgün cavab</span>
-            </div>
-            <div class="question-text">
-                <p>Düzbucaqlı üçbucağın katetləri 6 sm və 8 sm-dir. Hipotenuzun uzunluğu neçə sm-dir?</p>
-            </div>
-            <div class="answer-section">
-                <div class="answer-options">
-                    <div class="option correct">
-                        <span class="option-letter">A)</span>
-                        <span class="option-text">10 sm</span>
+            <!-- Unanswered Questions Card -->
+            <div class="col-md-4">
+                <div class="performance-card card-hover h-100"
+                     style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; box-shadow: var(--neu-shadow); border-left: 4px solid var(--bs-warning);">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="mb-0"><i class="bi bi-dash-circle-fill text-warning me-2"></i>Cavabsız suallar</h5>
+                        <span class="badge bg-warning bg-opacity-10 text-warning">@unansweredCount/@totalCount</span>
                     </div>
-                    <div class="option">
-                        <span class="option-letter">B)</span>
-                        <span class="option-text">12 sm</span>
+                    <div class="performance-value display-5 fw-bold mb-3" style="color: var(--bs-warning);">@unansweredCount</div>
+                    <div class="performance-progress">
+                        @{
+                            var unansweredPercentage = (double)unansweredCount / totalCount * 100;
+                        }
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar bg-warning" role="progressbar"
+                                 style="width: @unansweredPercentage%"
+                                 aria-valuenow="@unansweredPercentage"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100"></div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <small class="text-muted">0%</small>
+                            <small class="text-warning fw-semibold">@unansweredPercentage% cavabsız</small>
+                            <small class="text-muted">100%</small>
+                        </div>
                     </div>
-                    <div class="option">
-                        <span class="option-letter">C)</span>
-                        <span class="option-text">14 sm</span>
-                    </div>
-                    <div class="option">
-                        <span class="option-letter">D)</span>
-                        <span class="option-text">16 sm</span>
-                    </div>
-                </div>
-                <div class="answer-explanation">
-                    <h6><i class="bi bi-lightbulb-fill text-warning"></i> İzahat:</h6>
-                    <p>Pifaqor teoreminə görə: a² + b² = c². Burada 6² + 8² = 36 + 64 = 100 = c². Deməli, c = √100 = 10 sm.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Question 2 (Incorrect) -->
-        <div class="question-item incorrect">
-            <div class="question-header">
-                <span class="question-number">2.</span>
-                <span class="question-status"><i class="bi bi-x-circle-fill text-danger"></i> Yanlış cavab</span>
-            </div>
-            <div class="question-text">
-                <p>30° bucağın radianla ifadəsi neçədir?</p>
-            </div>
-            <div class="answer-section">
-                <div class="answer-options">
-                    <div class="option">
-                        <span class="option-letter">A)</span>
-                        <span class="option-text">π/3</span>
-                    </div>
-                    <div class="option correct">
-                        <span class="option-letter">B)</span>
-                        <span class="option-text">π/6</span>
-                    </div>
-                    <div class="option user-answer">
-                        <span class="option-letter">C)</span>
-                        <span class="option-text">π/4</span>
-                    </div>
-                    <div class="option">
-                        <span class="option-letter">D)</span>
-                        <span class="option-text">π/2</span>
-                    </div>
-                </div>
-                <div class="answer-explanation">
-                    <h6><i class="bi bi-lightbulb-fill text-warning"></i> İzahat:</h6>
-                    <p>Dərəcəni radiana çevirmək üçün: radian = dərəcə × (π/180). 30° × (π/180) = π/6.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Question 3 (Correct) -->
-        <div class="question-item correct">
-            <div class="question-header">
-                <span class="question-number">3.</span>
-                <span class="question-status"><i class="bi bi-check-circle-fill text-success"></i> Düzgün cavab</span>
-            </div>
-            <div class="question-text">
-                <p>2x² - 8x + 6 = 0 tənliyinin həllər çoxluğu hansıdır?</p>
-            </div>
-            <div class="answer-section">
-                <div class="answer-options">
-                    <div class="option">
-                        <span class="option-letter">A)</span>
-                        <span class="option-text">{1, 2}</span>
+        <style>
+            .performance-card {
+                transition: all 0.3s ease;
+            }
+
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+            }
+
+            .performance-value {
+                transition: all 0.3s ease;
+            }
+
+            .performance-card:hover .performance-value {
+                transform: scale(1.05);
+            }
+        </style>
+
+        <!-- Questions and Answers -->
+        <div class="dashboard-section" style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; box-shadow: var(--neu-shadow);">
+            <h5 class="mb-4"><i class="bi bi-question-circle-fill text-primary me-2"></i> Sual və cavablar</h5>
+
+            @foreach (var result in Model.Results)
+            {
+                var question = result.Question;
+                var isCorrect = result.YouAnswered == result.Question?.CorrectAnswer;
+                var isUnanswered = string.IsNullOrEmpty(result.YouAnswered); // Cavabsız sualları yoxlamaq
+
+
+                <div class="question-item @(isUnanswered ? "" : isCorrect ? "correct" : "incorrect")">
+                    <div class="question-header">
+                        <span class="question-number">
+                            @QuestionNumber.
+                            @{
+                                QuestionNumber++;
+                            }
+                        </span>
+                        <span class="question-status">
+                            @if (isUnanswered)
+                            {
+                                <i class="bi bi-dash-circle-fill text-warning"></i>
+                                <b>Cavabsız</b>
+                            }
+                            else
+                            {
+                                <i class="bi @(isCorrect ? "bi-check-circle-fill text-success" : "bi-x-circle-fill text-danger")"></i>
+                                @(isCorrect ? "Düzgün cavab" : "Yanlış cavab")
+                            }
+                        </span>
                     </div>
-                    <div class="option">
-                        <span class="option-letter">B)</span>
-                        <span class="option-text">{2, 3}</span>
+                    <div class="question-text">
+                        <p>@question?.QuestionText</p>
                     </div>
-                    <div class="option correct">
-                        <span class="option-letter">C)</span>
-                        <span class="option-text">{1, 3}</span>
-                    </div>
-                    <div class="option">
-                        <span class="option-letter">D)</span>
-                        <span class="option-text">{3, 4}</span>
+                    <div class="answer-section">
+                        <div class="answer-options">
+                            @{
+                                var options = new List<(string Letter, string Text)>
+                    {
+                    ("A", question?.AnswerA),
+                    ("B", question?.AnswerB),
+                    ("C", question?.AnswerC),
+                    ("D", question?.AnswerD),
+                    ("E", question?.AnswerE)
+                    }.Where(o => !string.IsNullOrEmpty(o.Text)).ToList();
+                            }
+
+                            @foreach (var option in options)
+                            {
+                                var isCorrectOption = option.Letter == result.Question?.CorrectAnswer;
+                                var isUserAnswer = option.Letter == result.YouAnswered;
+
+                                <div class="option @(isCorrectOption ? "correct" : "") @(isUserAnswer && !isCorrectOption ? "user-answer" : "")">
+                                    <span class="option-letter">@option.Letter)</span>
+                                    <span class="option-text">@option.Text</span>
+                                </div>
+                            }
+                        </div>
+                        <div class="answer-explanation">
+                            <h6><i class="bi bi-lightbulb-fill text-warning"></i> İzahat:</h6>
+                            <p>@question?.Explanation</p>
+                        </div>
                     </div>
                 </div>
-                <div class="answer-explanation">
-                    <h6><i class="bi bi-lightbulb-fill text-warning"></i> İzahat:</h6>
-                    <p>Tənliyi sadələşdirək: 2(x² - 4x + 3) = 0 ⇒ x² - 4x + 3 = 0. Diskriminant D = 16 - 12 = 4. Köklər: x₁ = (4+2)/2 = 3, x₂ = (4-2)/2 = 1.</p>
-                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger d-flex align-items-center" role="alert">
+            <i class="bi bi-x-circle-fill me-2"></i>
+            <div>
+                İmtina edildi - Nəticələr mövcud deyil
             </div>
         </div>
+    }
 
-     
-    </div>
+
 </div>

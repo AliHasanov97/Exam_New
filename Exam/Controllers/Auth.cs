@@ -74,8 +74,10 @@ namespace Exam.Controllers
             {
                 var user = _context.Users.FirstOrDefault(x => x.Email == userEmail);
                 // Session-a istifadəçi məlumatını əlavə edirik
-                HttpContext.Session.SetString("User", user.Id.ToString());
-                return RedirectToAction("Index", "Home");
+                HttpContext.Session.SetString("User", user!.Id.ToString());
+
+                
+                return RedirectToAction("Index", "Dashboard", new { area = "Cabinet" });
             }
 
             return RedirectToAction("Index", "Auth");
@@ -164,7 +166,7 @@ namespace Exam.Controllers
         {
             Id = Guid.NewGuid(),
             Amount = 10,
-            DateTime = DateTime.UtcNow,
+            DateTime = DateTime.Now,
             Title = "Qeydiyyat bonusu",
             Description = "Yeni qeydiyyatdan keçdiyiniz üçün bonus balans",
             FinancialOperations = "Deposit",
@@ -173,23 +175,7 @@ namespace Exam.Controllers
             DiscountPercent = 0,
             DiscountAmount = 0
         },
-        
-        // Sample expense with discount (Premium subscription)
-        new Tranzaction
-        {
-            Id = Guid.NewGuid(),
-            Amount = 2,
-            OriginalAmount = 4,
-            DateTime = DateTime.UtcNow.AddSeconds(10),
-            Title = "Premium abunə",
-            Description = "1 aylıq premium abunə (50% endirim)",
-            FinancialOperations = "Expence",
-            Icon = "bi-crown",
-            Balance = 0, // Will be updated after calculation
-            DiscountPercent = 50,
-            DiscountAmount = 2
-        },
-       
+
     },
                 Notifications = new List<Notification>
     {
@@ -202,15 +188,6 @@ namespace Exam.Controllers
             IsRead = false,
             CreatedAt = DateTime.Now
         },
-        new Notification
-        {
-            Id = Guid.NewGuid(),
-            Icon = "bi-percent",
-            Title = "Xüsusi endirim",
-            Message = "Yeni istifadəçi endirimi - ilk ödənişinizdə 10% endirim!",
-            IsRead = false,
-            CreatedAt = DateTime.Now
-        }
     }
             };
 

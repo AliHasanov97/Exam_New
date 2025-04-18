@@ -1,4 +1,5 @@
-﻿<div class="dashboard-section quick-actions-section">
+﻿@model User
+<div class="dashboard-section quick-actions-section">
     <h3 class="section-title"><i class="bi bi-lightning"></i> Sürətli Əməliyyatlar</h3>
 
     <div class="quick-actions-grid">
@@ -23,7 +24,7 @@
             <span>Profilə bax</span>
         </a>
 
-        <a href="/tarifler" class="quick-action">
+        <a asp-area="Cabinet" asp-controller="Tariffs" asp-action="Index" class="quick-action">
             <div class="action-icon warning">
                 <i class="bi bi-rocket"></i>
             </div>
@@ -31,105 +32,204 @@
         </a>
     </div>
 </div>
-
 <div class="dashboard-section">
-    <h3 class="section-title"><i class="bi bi-graph-up"></i> Şəxsi Statistika</h3>
+    <h3 class="section-title"><i class="bi bi-bar-chart-line"></i> Performans Metrikaları</h3>
     <div class="stats-grid">
-        <!-- İmtahan Statistikası -->
+        <!-- İmtahan Aktivliyi -->
         <div class="stat-card primary">
             <div class="stat-icon">
-                <i class="bi bi-journal-check"></i>
+                <i class="bi bi-journal-text"></i>
             </div>
             <div class="stat-info">
-                <h4>Tamamlanmış İmtahanlar</h4>
-                <p class="stat-value">12</p>
-                <p class="stat-change positive">+2 keçən aya nisbətən</p>
+                <h4>Tamamlanmış Testlər</h4>
+                <p class="stat-value">@Model.Exams?.Count(x=>x.ExamCompletion.Seconds>0) </p>
+                @{
+                    var count = @Model.Exams?.Count(x => x.DateTime.Month ==  DateTime.Now.Month && x.DateTime.Year ==  DateTime.Now.Year && x.ExamCompletion.Seconds > 0);
+                }
+                @if(count>0){
+                    <div class="stat-comparison">
+                        <span class="trend-indicator positive">+@count</span>
+                        <span class="comparison-text">bu ay</span>
+                    </div>
+                }
             </div>
         </div>
 
-        <!-- Ortalama Nəticə -->
+        <!-- Bilik Səviyyəsi -->
         <div class="stat-card success">
             <div class="stat-icon">
-                <i class="bi bi-award"></i>
+                <i class="bi bi-speedometer2"></i>
             </div>
             <div class="stat-info">
-                <h4>Ortalama Nəticə</h4>
-                <p class="stat-value">87%</p>
+                <h4>Ümumi Bacarıq Səviyyəsi</h4>
+                <p class="stat-value">@ViewBag.Score%</p>
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 87%"></div>
+                    <div class="progress-fill" style="width: @ViewBag.Score%"></div>
                 </div>
+                <p class="progress-label">Mastery: @ViewBag.Score /100</p>
             </div>
         </div>
 
-        <!-- Aktiv İmtahanlar -->
+        <!-- İstifadəçi Balansı -->
         <div class="stat-card warning">
             <div class="stat-icon">
-                <i class="bi bi-clock-history"></i>
+                <i class="bi bi-wallet"></i> <!-- Balans ikonası -->
             </div>
             <div class="stat-info">
-                <h4>Aktiv İmtahanlar</h4>
-                <p class="stat-value">3</p>
-                <a href="/imtahanlar" class="stat-link">Hamısına bax →</a>
+                <h4>İstifadəçi Balansı</h4>
+                <p class="stat-value">@Model.Balance ₼</p> <!-- Balansın dəyəri -->
             </div>
         </div>
 
-        <!-- Son Test Nəticəsi -->
+        <!-- Son Test Analizi -->
         <div class="stat-card info">
             <div class="stat-icon">
-                <i class="bi bi-clipboard-data"></i>
+                <i class="bi bi-clipboard2-check"></i>
             </div>
             <div class="stat-info">
-                <h4>Son Test Nəticəsi</h4>
-                <p class="stat-value">92%</p>
-                <p class="stat-meta">Riyaziyyat - 15 May 2023</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="dashboard-section">
-    <h3 class="section-title"><i class="bi bi-calendar2-week"></i> Yaxınlaşan İmtahanlar</h3>
-
-    <div class="upcoming-exams">
-        <!-- İmtahan Kartı 1 -->
-        <div class="exam-card">
-            <div class="exam-header">
-                <span class="exam-badge primary">Yeni</span>
-                <h4>Fizika - Termodinamika</h4>
-            </div>
-            <div class="exam-meta">
-                <span><i class="bi bi-calendar"></i> 15 İyun 2023</span>
-                <span><i class="bi bi-clock"></i> 60 dəqiqə</span>
-            </div>
-            <div class="exam-footer">
-                <a href="#" class="btn btn-outline">Ətraflı</a>
-                <div class="days-left">
-                    <i class="bi bi-alarm"></i>
-                    <span>3 gün qalıb</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- İmtahan Kartı 2 -->
-        <div class="exam-card">
-            <div class="exam-header">
-                <h4>İngilis Dili - Grammar</h4>
-            </div>
-            <div class="exam-meta">
-                <span><i class="bi bi-calendar"></i> 20 İyun 2023</span>
-                <span><i class="bi bi-clock"></i> 45 dəqiqə</span>
-            </div>
-            <div class="exam-footer">
-                <a href="#" class="btn btn-outline">Ətraflı</a>
-                <div class="days-left">
-                    <i class="bi bi-alarm"></i>
-                    <span>8 gün qalıb</span>
+                <h4>Son Test Analizi</h4>
+                <p class="stat-value">@ViewBag.LastScore%</p>
+                <div class="result-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Fənn:</span>
+                        <span class="detail-value">@ViewBag.LastName</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Tarix:</span>
+                        <span class="detail-value">@ViewBag.LastDate</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="section-footer">
-        <a href="/imtahanlar" class="view-all">Bütün imtahanlara bax →</a>
-    </div>
 </div>
+<style>
+
+    /* Kart dizaynı */
+    .stat-card {
+        background: #fff;
+        border-radius: 6px;
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        border-left: 4px solid;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* İkon */
+    .stat-icon {
+        font-size: 1.5rem;
+        color: #fff;
+        background: var(--card-color);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Statistika detallar */
+    .stat-info {
+        flex: 1;
+    }
+
+        .stat-info h4 {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+    .stat-value {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin: 5px 0;
+    }
+
+    /* Kart rəngləri */
+    .primary {
+        --card-color: #3498db;
+        border-color: #3498db;
+    }
+
+    .success {
+        --card-color: #2ecc71;
+        border-color: #2ecc71;
+    }
+
+    .warning {
+        --card-color: #f39c12;
+        border-color: #f39c12;
+    }
+
+    .info {
+        --card-color: #9b59b6;
+        border-color: #9b59b6;
+    }
+
+    /* Statistika müqayisəsi */
+    .stat-comparison {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.8rem;
+    }
+
+    .trend-indicator {
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+
+        .trend-indicator.positive {
+            color: #27ae60;
+        }
+
+    .comparison-text {
+        color: #7f8c8d;
+    }
+
+    /* Proqress bar */
+    .progress-bar {
+        height: 6px;
+        background: #ecf0f1;
+        border-radius: 3px;
+        margin: 8px 0;
+    }
+
+    .progress-fill {
+        height: 100%;
+        border-radius: 3px;
+        background: var(--card-color);
+    }
+
+    .progress-label {
+        font-size: 0.75rem;
+        color: #7f8c8d;
+        margin-top: 3px;
+    }
+
+    /* Son Test Analizi */
+    .result-details {
+        margin-top: 8px;
+    }
+
+    .detail-item {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        margin: 3px 0;
+    }
+
+    .detail-label {
+        color: #7f8c8d;
+    }
+
+    .detail-value {
+        color: #2c3e50;
+        font-weight: 500;
+    }
+
+</style>

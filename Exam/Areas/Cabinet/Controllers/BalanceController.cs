@@ -22,7 +22,7 @@ namespace Exam.Areas.Cabinet.Controllers
 
             if (string.IsNullOrEmpty(userID))
             {
-                return RedirectToAction("Login", "Auth", new { area = "" });
+                return RedirectToAction("index", "Home", new { area = "" });
             }
 
             var user = _context.Users
@@ -35,7 +35,7 @@ namespace Exam.Areas.Cabinet.Controllers
             }
 
             // Get active tariffs with discount information
-            var tariffs = _context.Tariff
+            var tariffs = _context.Tariffs
                 .Where(t => t.IsActive)
                 .OrderBy(t => t.Price)
                 .ToList();

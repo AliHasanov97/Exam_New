@@ -1,5 +1,5 @@
-﻿<style>
-  
+﻿@model Subject
+<style>
     .dashboard-section {
         padding: 2rem;
     }
@@ -48,12 +48,19 @@
         margin-top: 1rem;
     }
 
+    .question-reference {
+        font-size: 0.85rem;
+        color: #6c757d;
+        margin-top: 0.5rem;
+        font-style: italic;
+    }
 </style>
+
 <div class="dashboard-section">
     <div class="section-title d-flex flex-wrap align-items-center justify-content-between gap-3">
         <div class="d-flex align-items-center gap-2">
-            <i class="bi bi-journal-bookmark fs-4"></i>
-            <h3 class="mb-0">Riyaziyyat - Suallar</h3>
+            @Model.Icon
+            <h3 class="mb-0">@Model.Name</h3>
         </div>
         <div class="d-flex flex-wrap gap-2">
             <input type="text" id="searchInput" class="form-control form-control-sm" placeholder="Sual axtar..." />
@@ -72,101 +79,95 @@
     </div>
 
     <div class="question-list" id="questionsContainer">
-        <!-- Sual 1 -->
-        <div class="question-item" data-id="1">
-            <div class="question-number">Sual 1</div>
-            <div class="question-text">
-                <p>2x + 5 = 15 tənliyində x-in qiymətini tapın.</p>
-            </div>
-            <div class="answer-options mt-2">
-                <div class="option">A) 3</div>
-                <div class="option correct">B) 5</div>
-                <div class="option">C) 7</div>
-                <div class="option">D) 10</div>
-            </div>
-            <div class="answer-explanation">
-                <h6><i class="bi bi-lightbulb"></i> İzahat</h6>
-                <p>2x + 5 = 15 → 2x = 10 → x = 5</p>
-            </div>
-        </div>
+        @foreach (var question in Model.Questions!)
+        {
+            <div class="question-item" data-id="@question.QuestionNumber">
+                <div class="question-number">Sual @question.QuestionNumber</div>
+                <div class="question-text">
+                    <p>@Html.Raw(question.QuestionText)</p>
+                </div>
 
-        <!-- Sual 2 -->
-        <div class="question-item" data-id="2">
-            <div class="question-number">Sual 2</div>
-            <div class="question-text">
-                <p>Düzbucaqlının uzunluğu 12 sm, eni isə uzunluğundan 4 sm qısadır. Sahəni tapın.</p>
-            </div>
-            <div class="question-image mt-2">
-                <img src="https://via.placeholder.com/400x200?text=Düzbucaqlı+Şəkli" class="img-fluid rounded" alt="Düzbucaqlı şəkli">
-            </div>
-            <div class="answer-options mt-2">
-                <div class="option">A) 48 sm²</div>
-                <div class="option">B) 64 sm²</div>
-                <div class="option correct">C) 96 sm²</div>
-                <div class="option">D) 128 sm²</div>
-            </div>
-            <div class="answer-explanation">
-                <h6><i class="bi bi-lightbulb"></i> İzahat</h6>
-                <p>Ən = 12 - 4 = 8 sm. Sahə = Uzunluq × En = 12 × 8 = 96 sm²</p>
-            </div>
-        </div>
+                <div class="answer-options mt-2">
+                    <div class="option @(question.CorrectAnswer == "A" ? "correct" : "")">A) @question.AnswerA</div>
+                    <div class="option @(question.CorrectAnswer == "B" ? "correct" : "")">B) @question.AnswerB</div>
+                    <div class="option @(question.CorrectAnswer == "C" ? "correct" : "")">C) @question.AnswerC</div>
+                    <div class="option @(question.CorrectAnswer == "D" ? "correct" : "")">D) @question.AnswerD</div>
+                    @if (!string.IsNullOrEmpty(question.AnswerE))
+                    {
+                        <div class="option @(question.CorrectAnswer == "E" ? "correct" : "")">E) @question.AnswerE</div>
+                    }
+                </div>
 
-        <!-- Yeni suallar bura əlavə oluna bilər -->
+                @if (!string.IsNullOrEmpty(question.Explanation))
+                {
+                    <div class="answer-explanation">
+                        <h6><i class="bi bi-lightbulb"></i> İzahat</h6>
+                        <p>@question.Explanation</p>
+                    </div>
+                }
+
+                @if (!string.IsNullOrEmpty(question.Reference))
+                {
+                    <div class="question-reference">
+                        <strong>Mənbə:</strong> @question.Reference
+                    </div>
+                }
+            </div>
+        }
     </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
-      // Kitab görünüşü toggle
-      $('#toggleBookView').click(function () {
-        $('body').toggleClass('book-view');
-        $(this).find('i').toggleClass('bi-columns bi-layout-sidebar-inset');
-        localStorage.setItem('bookView', $('body').hasClass('book-view'));
-      });
-
-      if (localStorage.getItem('bookView') === 'true') {
-        $('body').addClass('book-view');
-        $('#toggleBookView').find('i').removeClass('bi-columns').addClass('bi-layout-sidebar-inset');
-      }
-
-      // Çap
-      $('#printQuestions').click(function () {
-        $('#toggleBookView').addClass('d-none');
-        window.print();
-        setTimeout(() => {
-          $('#toggleBookView').removeClass('d-none');
-        }, 500);
-      });
-
-      // Axtarış
-      $('#searchInput').on('input', function () {
-        let searchTerm = $(this).val().toLowerCase();
-        $('.question-item').each(function () {
-          let questionText = $(this).find('.question-text').text().toLowerCase();
-          $(this).toggle(questionText.includes(searchTerm));
+        // Kitab görünüşü toggle
+        $('#toggleBookView').click(function () {
+            $('body').toggleClass('book-view');
+            $(this).find('i').toggleClass('bi-columns bi-layout-sidebar-inset');
+            localStorage.setItem('bookView', $('body').hasClass('book-view'));
         });
-      });
 
-      // Aralığa görə süzgəc
-       $('#filterBtn').click(function () {
-        let fromVal = $('#fromQuestion').val();
-        let toVal = $('#toQuestion').val();
-
-        // Əgər hər iki input boşdursa, hamısını göstər
-        if (!fromVal && !toVal) {
-            $('.question-item').show();
-            return;
+        if (localStorage.getItem('bookView') === 'true') {
+            $('body').addClass('book-view');
+            $('#toggleBookView').find('i').removeClass('bi-columns').addClass('bi-layout-sidebar-inset');
         }
 
-        let from = fromVal ? parseInt(fromVal) : 1;
-        let to = toVal ? parseInt(toVal) : Number.MAX_SAFE_INTEGER;
-
-        $('.question-item').each(function () {
-            let id = parseInt($(this).attr('data-id'));
-            $(this).toggle(id >= from && id <= to);
+        // Çap
+        $('#printQuestions').click(function () {
+            $('#toggleBookView').addClass('d-none');
+            window.print();
+            setTimeout(() => {
+                $('#toggleBookView').removeClass('d-none');
+            }, 500);
         });
-    });
 
+        // Axtarış
+        $('#searchInput').on('input', function () {
+            let searchTerm = $(this).val().toLowerCase();
+            $('.question-item').each(function () {
+                let questionText = $(this).find('.question-text').text().toLowerCase();
+                $(this).toggle(questionText.includes(searchTerm));
+            });
+        });
+
+        // Aralığa görə süzgəc
+        $('#filterBtn').click(function () {
+            let fromVal = $('#fromQuestion').val();
+            let toVal = $('#toQuestion').val();
+
+            // Əgər hər iki input boşdursa, hamısını göstər
+            if (!fromVal && !toVal) {
+                $('.question-item').show();
+                return;
+            }
+
+            let from = fromVal ? parseInt(fromVal) : 1;
+            let to = toVal ? parseInt(toVal) : Number.MAX_SAFE_INTEGER;
+
+            $('.question-item').each(function () {
+                let id = parseInt($(this).attr('data-id'));
+                $(this).toggle(id >= from && id <= to);
+            });
+        });
     });
 </script>

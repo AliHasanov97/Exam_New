@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Exam.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250410054825_Tariff")]
-    partial class Tariff
+    [Migration("20250411165401_ProjectAdded")]
+    partial class ProjectAdded
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -129,6 +129,63 @@ namespace Exam.Migrations
                     b.ToTable("CarouselSlides");
                 });
 
+            modelBuilder.Entity("Exam.Models.ExamResult", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ExamId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("YouAnswered")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExamId");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("ExamResults");
+                });
+
+            modelBuilder.Entity("Exam.Models.ExamSession", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan>("ExamCompletion")
+                        .HasColumnType("time");
+
+                    b.Property<int>("ExamCount")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("ExamDuration")
+                        .HasColumnType("time");
+
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubjectId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ExamSessions");
+                });
+
             modelBuilder.Entity("Exam.Models.Notification", b =>
                 {
                     b.Property<Guid>("Id")
@@ -161,6 +218,118 @@ namespace Exam.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("Exam.Models.Purchase", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "SubjectId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("Purchases");
+                });
+
+            modelBuilder.Entity("Exam.Models.Question", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AnswerA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AnswerB")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AnswerC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AnswerD")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AnswerE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CorrectAnswer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Explanation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("QuestionNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("QuestionText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("Exam.Models.Subject", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("PriceForExam")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("PriceForRead")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Subjects");
                 });
 
             modelBuilder.Entity("Exam.Models.Tariff", b =>
@@ -199,7 +368,7 @@ namespace Exam.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tariff");
+                    b.ToTable("Tariffs");
                 });
 
             modelBuilder.Entity("Exam.Models.Tranzaction", b =>
@@ -420,6 +589,44 @@ namespace Exam.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Exam.Models.ExamResult", b =>
+                {
+                    b.HasOne("Exam.Models.ExamSession", "Exam")
+                        .WithMany("Results")
+                        .HasForeignKey("ExamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Exam.Models.Question", "Question")
+                        .WithMany()
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Exam");
+
+                    b.Navigation("Question");
+                });
+
+            modelBuilder.Entity("Exam.Models.ExamSession", b =>
+                {
+                    b.HasOne("Exam.Models.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Exam.Models.User", "User")
+                        .WithMany("Exams")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Exam.Models.Notification", b =>
                 {
                     b.HasOne("Exam.Models.User", "User")
@@ -429,6 +636,36 @@ namespace Exam.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Exam.Models.Purchase", b =>
+                {
+                    b.HasOne("Exam.Models.Subject", "Subject")
+                        .WithMany("Purchases")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Exam.Models.User", "User")
+                        .WithMany("Purchases")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Exam.Models.Question", b =>
+                {
+                    b.HasOne("Exam.Models.Subject", "Subject")
+                        .WithMany("Questions")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("Exam.Models.Tranzaction", b =>
@@ -493,9 +730,25 @@ namespace Exam.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Exam.Models.ExamSession", b =>
+                {
+                    b.Navigation("Results");
+                });
+
+            modelBuilder.Entity("Exam.Models.Subject", b =>
+                {
+                    b.Navigation("Purchases");
+
+                    b.Navigation("Questions");
+                });
+
             modelBuilder.Entity("Exam.Models.User", b =>
                 {
+                    b.Navigation("Exams");
+
                     b.Navigation("Notifications");
+
+                    b.Navigation("Purchases");
 
                     b.Navigation("Tranzactions");
                 });

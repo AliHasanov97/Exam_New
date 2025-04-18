@@ -14,16 +14,18 @@ namespace Exam.ViewComponent
         }
         public IViewComponentResult Invoke()
         {
-            string? User = HttpContext.Session.GetString("User");
+            string? userId = HttpContext.Session.GetString("User");
 
-            if (User != null)
+            if (!string.IsNullOrEmpty(userId))
             {
-                User _user = _context.Users.Where(User => User.Id == User.Id).FirstOrDefault();
+                User? _user = _context.Users.FirstOrDefault(x => x.Id.ToString() == userId);
 
-                ViewData["FullName"] = _user?.FullName;
-                ViewData["Picture"] = _user?.Picture;
-                ViewData["Email"] = _user?.Email;
-
+                if (_user != null)
+                {
+                    ViewData["FullName"] = _user.FullName;
+                    ViewData["Picture"] = _user.Picture;
+                    ViewData["Email"] = _user.Email;
+                }
             }
             return View();
         }

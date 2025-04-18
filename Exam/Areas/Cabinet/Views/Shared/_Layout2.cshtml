@@ -32,12 +32,94 @@
     <link rel="stylesheet" href="~/cabinet/css/StyleSheet.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Hamburger menu styles */
+        .sidebar-toggle {
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            cursor: pointer;
+            display: none;
+            margin-right: 1rem;
+        }
+
+        .sidebar-close {
+            display: none;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .portal-sidebar {
+            transition: transform 0.3s ease;
+        }
+
+        /* Mobile styles */
+        @@media screen and (max-width: 992px) {
+            .sidebar-toggle
+
+        {
+            display: block;
+        }
+
+        .sidebar-close {
+            display: block;
+        }
+
+        .portal-sidebar {
+            position: fixed;
+            z-index: 1000;
+            transform: translateX(-100%);
+            height: 100vh;
+            width: 280px;
+        }
+
+            .portal-sidebar.active {
+                transform: translateX(0);
+                box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+
+        .portal-content {
+            margin-left: 0;
+        }
+
+        
+
+        }
+
+        @@media (min-width: 993px) {
+            .portal-sidebar
+
+        {
+            transform: translateX(0) !important;
+        }
+
+        .mobile-only {
+            display: none !important;
+        }
+
+        .sidebar-close {
+            display: none !important;
+        }
+
+        }
+    </style>
     @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     <div class="exam-portal">
         <!-- Glassmorphism Sidebar -->
         <aside class="portal-sidebar">
+            <button class="sidebar-close mobile-only">
+                <i class="bi bi-x-lg"></i>
+            </button>
             <div class="portal-brand">
                 <div class="logo-icon">
                     <i class="bi bi-journal-bookmark-fill"></i>
@@ -68,15 +150,9 @@
                         </a>
                     </li>
                     <li class="@(ViewContext.RouteData.Values["Page"]?.ToString() == "/Tarifler" ? "active" : "")">
-                        <a asp-area="Cabinet" asp-controller="Tariff" asp-action="Index">
+                        <a asp-area="Cabinet" asp-controller="Tariffs" asp-action="Index">
                             <i class="bi bi-credit-card"></i>
                             <span>Tariflər</span>
-                        </a>
-                    </li>
-                    <li class="@(ViewContext.RouteData.Values["Page"]?.ToString() == "/Promocode" ? "active" : "")">
-                        <a asp-area="Cabinet" asp-controller="Promocode" asp-action="Index">
-                            <i class="bi bi bi-percent"></i>
-                            <span>Promokod</span>
                         </a>
                     </li>
                     <li class="@(ViewContext.RouteData.Values["Page"]?.ToString() == "/Balance" ? "active" : "")">
@@ -108,8 +184,6 @@
                         <i class="bi bi-box-arrow-right"></i>
                     </button>
                 </form>
-
-
             </div>
         </aside>
 
@@ -118,6 +192,9 @@
             <!-- Header with Dynamic Glass Effect -->
             <header class="content-header">
                 <div class="header-content">
+                    <button class="sidebar-toggle mobile-only">
+                        <i class="bi bi-list"></i>
+                    </button>
                     <h2><i class="bi @ViewData["PageIcon"]"></i> @ViewData["PageTitle"] Dashboard</h2>
                     <div class="header-actions">
                         <a asp-area="Cabinet" asp-controller="Notification" asp-action="Index" class="notification-bubble">
@@ -172,7 +249,8 @@
                 $('html').attr('data-theme') === 'light' ? 'dark' : 'light');
             $(this).find('i').toggleClass('bi-moon bi-sun');
         });
-                // Submenu toggle functionality
+
+        // Submenu toggle functionality
         $('.has-submenu > a').click(function(e) {
             if ($(this).parent().hasClass('has-submenu')) {
                 e.preventDefault();
@@ -187,6 +265,36 @@
                 $('.has-submenu').removeClass('active');
                 $('.submenu-toggle').removeClass('bi-chevron-up').addClass('bi-chevron-down');
             }
+        });
+
+        // Hamburger menu functionality
+        $(document).ready(function() {
+            // Toggle sidebar with hamburger button
+            $('.sidebar-toggle').click(function() {
+                $('.portal-sidebar').addClass('active');
+            });
+
+            // Close sidebar with close button
+            $('.sidebar-close').click(function() {
+                $('.portal-sidebar').removeClass('active');
+            });
+
+            // Close menu when clicking outside (mobile only)
+            $(document).click(function(e) {
+                if ($(window).width() <= 992) {
+                    if (!$(e.target).closest('.portal-sidebar').length &&
+                        !$(e.target).closest('.sidebar-toggle').length) {
+                        $('.portal-sidebar').removeClass('active');
+                    }
+                }
+            });
+
+            // Check screen size on resize
+            $(window).resize(function() {
+                if ($(window).width() > 992) {
+                    $('.portal-sidebar').removeClass('active');
+                }
+            });
         });
     </script>
     @await RenderSectionAsync("Scripts", required: false)

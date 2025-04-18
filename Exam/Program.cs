@@ -7,14 +7,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Sessiyanı əlavə et
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Sessiya 30 dəqiqə aktiv qalacaq
+    options.IdleTimeout = TimeSpan.FromHours(2); // Sessiya 2 saat aktiv qalacaq
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
 
+
 builder.Services.AddDistributedMemoryCache(); // Sessiyanın saxlanması üçün lazımdır
+
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 // DbContext əlavə etmək
@@ -55,6 +59,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 app.UseSession(); // 🔹 Sessiyanı burada aktiv et!
+
 
 app.MapStaticAssets();
 

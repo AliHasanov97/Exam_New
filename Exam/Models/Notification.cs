@@ -5,7 +5,7 @@ namespace Exam.Models
     public class Notification
     {
         public Guid Id { get; set; } = Guid.NewGuid();
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } =  DateTime.Now;
         public required string Icon { get; set; }
         public required string Title { get; set; }
         public required string Message { get; set; }

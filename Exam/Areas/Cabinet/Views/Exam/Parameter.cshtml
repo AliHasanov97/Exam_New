@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider@15.7.0/dist/nouislider.min.css">
     <style>
+        /* Your existing styles remain the same */
         :root {
             --primary: #6C5CE7;
             --primary-light: #A29BFE;
@@ -106,58 +107,76 @@
             <i class="bi bi-gear"></i> İmtahan Parametrləri
         </h1>
 
-        <!-- Sabit Fənn -->
-        <div class="param-group">
-            <div class="param-title">
-                <i class="bi bi-book"></i> Fənn
+        <form method="post" asp-area="Cabinet" asp-controller="Exam" asp-action="Parameter" id="examForm">
+            <!-- Subject Information -->
+            <div class="param-group">
+                <div class="param-title">
+                    <i class="bi bi-book"></i> Fənn
+                </div>
+                <div>
+                    <input type="hidden" name="subjectId" value="@ViewBag.SubjectId" />
+                    <strong>@ViewBag.SubjectName</strong><br>
+                    <small class="text-muted">@ViewBag.SubjectDescription</small>
+                </div>
             </div>
-            <div>
-                <strong>Riyaziyyat</strong><br>
-                <small class="text-muted">Məntiq, funksiyalar, tənliklər, bərabərliklər və digər mövzuları əhatə edir.</small>
-            </div>
-        </div>
 
-        <!-- Sual Sayı -->
-        <div class="param-group">
-            <div class="param-title">
-                <i class="bi bi-journal-text"></i> Sual Sayı
+            <!-- Question Count -->
+            <div class="param-group">
+                <div class="param-title">
+                    <i class="bi bi-journal-text"></i> Sual Sayı
+                </div>
+                <select class="select-box" name="questionCount" id="questionCount">
+                    <option value="10">10 sual</option>
+                    <option value="20" selected>20 sual</option>
+                    <option value="30">30 sual</option>
+                    <option value="40">40 sual</option>
+                    <option value="50">50 sual</option>
+                </select>
             </div>
-            <select class="select-box" id="questionCount">
-                <option value="10">10 sual</option>
-                <option value="20" selected>20 sual</option>
-                <option value="30">30 sual</option>
-                <option value="40">40 sual</option>
-            </select>
-        </div>
 
-        <!-- Range Slider -->
-        <div class="param-group">
-            <div class="param-title">
-                <i class="bi bi-sliders"></i> Sual Aralığı
+            <!-- Range Slider -->
+            <div class="param-group">
+                <div class="param-title">
+                    <i class="bi bi-sliders"></i> Sual Aralığı
+                </div>
+                <div id="rangeSlider"></div>
+                <div class="slider-values">
+                    <span id="minVal">1</span>
+                    <span id="maxVal">@ViewBag.Max</span>
+                </div>
+                <input type="hidden" name="min" id="minQuestionInput" value="1" />
+                <input type="hidden" name="max" id="maxQuestionInput" value="50" />
             </div>
-            <div id="rangeSlider"></div>
-            <div class="slider-values">
-                <span id="minVal">1</span>
-                <span id="maxVal">500</span>
-            </div>
-        </div>
 
-        <!-- Start Exam -->
-        <button class="start-exam-btn" id="startExamBtn">
-            <i class="bi bi-pencil"></i> İmtahana Başla
-        </button>
+            <div class="param-group">
+                <div class="param-title">
+                    <i class="bi bi-cash"></i> Imtahan qiyməti
+                </div>
+                <div>
+                    <strong>@ViewBag.price ₼</strong><br>
+                </div>
+            </div>
+
+            <!-- Start Exam -->
+            @(ViewBag.Check ? 
+                (Html.Raw("<button type=\"submit\" class=\"start-exam-btn\" id=\"startExamBtn\"><i class=\"bi bi-pencil\"></i> İmtahana Başla</button>")) : 
+                (Html.Raw("<div class=\"alert alert-danger\" role=\"alert\"><i class=\"bi bi-exclamation-triangle\"></i> İmtahan üçün balansınızda kifayət qədər vəsait yoxdur!</div>")))
+
+        </form>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/nouislider@15.7.0/dist/nouislider.min.js"></script>
     <script>
         // Slider Setup
         const rangeSlider = document.getElementById('rangeSlider');
+        const maxValue = @ViewBag.Max;
+
         noUiSlider.create(rangeSlider, {
-            start: [1, 50],
+            start: [1, Math.min(50, maxValue)],
             connect: true,
             range: {
                 min: 1,
-                max: 500
+                max: maxValue
             },
             step: 1,
             tooltips: false,
@@ -169,32 +188,31 @@
 
         const minVal = document.getElementById('minVal');
         const maxVal = document.getElementById('maxVal');
+        const minQuestionInput = document.getElementById('minQuestionInput');
+        const maxQuestionInput = document.getElementById('maxQuestionInput');
 
         rangeSlider.noUiSlider.on('update', function (values) {
-            minVal.textContent = values[0];
-            maxVal.textContent = values[1];
+            const min = Math.round(values[0]);
+            const max = Math.round(values[1]);
+
+            minVal.textContent = min;
+            maxVal.textContent = max;
+
+            minQuestionInput.value = min;
+            maxQuestionInput.value = max;
         });
 
-        // Start exam button
-        document.getElementById('startExamBtn').addEventListener('click', function () {
-            const [minQuestion, maxQuestion] = rangeSlider.noUiSlider.get().map(Number);
+        // Form validation
+        document.getElementById('examForm').addEventListener('submit', function(e) {
+            const min = parseInt(minQuestionInput.value);
+            const max = parseInt(maxQuestionInput.value);
 
-            if (minQuestion >= maxQuestion) {
+            if (min >= max) {
+                e.preventDefault();
                 alert('Max sual nömrəsi min dəyərindən böyük olmalıdır!');
-                return;
+                return false;
             }
-
-            const params = {
-                subject: "riyaziyyat",
-                questionCount: document.getElementById('questionCount').value,
-                questionRange: {
-                    min: minQuestion,
-                    max: maxQuestion
-                }
-            };
-
-            localStorage.setItem('examParams', JSON.stringify(params));
-            window.location.href = 'exam.html';
+            return true;
         });
     </script>
 </body>
