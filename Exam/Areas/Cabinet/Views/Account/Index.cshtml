@@ -1,6 +1,9 @@
 ﻿@model User?
 @using System.Globalization
-
+@{
+    ViewBag.PageIcon = "bi-person";
+    ViewBag.PageTitle = "Profil";
+}
 @if (Model == null)
 {
     <div class="alert alert-danger">User data not found.</div>

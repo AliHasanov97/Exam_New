@@ -1,4 +1,5 @@
 ﻿using Exam.DAL;
+using Exam.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -72,7 +73,27 @@ namespace Exam.Areas.Cabinet.Controllers
                     .ThenInclude(r => r.Question)
                 .Include(s => s.Subject)
                 .FirstOrDefault();
+            string? userID = HttpContext.Session.GetString("User");
+            var purchasedSubject = _context.Purchases
+                .Where(x => x.UserId.ToString() == userID && x.SubjectId == examSession!.SubjectId)
+                .OrderByDescending(x => x.StartDate)
+                .FirstOrDefault();
 
+            if (purchasedSubject != null)
+            {
+                if (purchasedSubject.EndDate == null || purchasedSubject.EndDate > DateTime.Now)
+                {
+                    ViewBag.Premium = true;
+                }
+                else
+                {
+                    ViewBag.Premium = false;
+                }
+            }
+            else
+            {
+                ViewBag.Premium = false;
+            }
             if (examSession == null)
             {
                 return NotFound();
@@ -90,6 +111,7 @@ namespace Exam.Areas.Cabinet.Controllers
             ViewBag.CorrectCount = correctCount;
             ViewBag.TotalQuestions = totalQuestions;
             ViewBag.Score = score;
+
 
             // Nəticədə Exam modelini View-a göndər
             return View(examSession);

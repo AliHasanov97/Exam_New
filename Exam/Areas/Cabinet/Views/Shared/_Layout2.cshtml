@@ -20,6 +20,10 @@
 
     var userInitial = username.Substring(0, 1).ToUpper();
     var notificationCount = Context.Session.GetInt32("NotificationCount") ?? 0;
+
+    var area = ViewContext.RouteData.Values["area"]?.ToString();
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+
 }
 
 <!DOCTYPE html>
@@ -131,37 +135,37 @@
             <nav class="portal-nav">
                 <div class="nav-highlight"></div>
                 <ul>
-                    <li class="@(ViewContext.RouteData.Values["Page"]?.ToString() == "/Index" ? "active" : "")">
+                    <li class="@(area == "Cabinet" && controller == "Dashboard" ? "active" : "")">
                         <a asp-area="Cabinet" asp-controller="Dashboard" asp-action="Index">
                             <i class="bi bi-house"></i>
                             <span>Ana Səhifə</span>
                         </a>
                     </li>
-                    <li class="@(ViewContext.RouteData.Values["Page"]?.ToString() == "/Imtahanlar" ? "active" : "")">
+                    <li class="@(area == "Cabinet" && controller == "Questions" ? "active" : "")">
                         <a asp-area="Cabinet" asp-controller="Questions" asp-action="Index">
                             <i class="bi bi-journal-text"></i>
                             <span>İmtahanlar</span>
                         </a>
                     </li>
-                    <li class="@(ViewContext.RouteData.Values["Page"]?.ToString() == "/Neticeleer" ? "active" : "")">
+                    <li class="@(area == "Cabinet" && controller == "Results" ? "active" : "")">
                         <a asp-area="Cabinet" asp-controller="Results" asp-action="Index">
                             <i class="bi bi-clipboard-data"></i>
                             <span>Nəticələr</span>
                         </a>
                     </li>
-                    <li class="@(ViewContext.RouteData.Values["Page"]?.ToString() == "/Tarifler" ? "active" : "")">
+                    <li class="@(area == "Cabinet" && controller == "Tariffs" ? "active" : "")">
                         <a asp-area="Cabinet" asp-controller="Tariffs" asp-action="Index">
                             <i class="bi bi-credit-card"></i>
                             <span>Tariflər</span>
                         </a>
                     </li>
-                    <li class="@(ViewContext.RouteData.Values["Page"]?.ToString() == "/Balance" ? "active" : "")">
+                    <li class="@(area == "Cabinet" && controller == "Balance" ? "active" : "")">
                         <a asp-area="Cabinet" asp-controller="Balance" asp-action="Index">
                             <i class="bi bi-wallet2"></i>
                             <span>Balans</span>
                         </a>
                     </li>
-                    <li class="@(ViewContext.RouteData.Values["Page"]?.ToString() == "/Account" ? "active" : "")">
+                    <li class="@(area == "Cabinet" && controller == "Account" ? "active" : "")">
                         <a asp-area="Cabinet" asp-controller="Account" asp-action="Index">
                             <i class="bi bi-person"></i>
                             <span>Profil</span>
@@ -195,7 +199,7 @@
                     <button class="sidebar-toggle mobile-only">
                         <i class="bi bi-list"></i>
                     </button>
-                    <h2><i class="bi @ViewData["PageIcon"]"></i> @ViewData["PageTitle"] Dashboard</h2>
+                    <h2><i class="bi @ViewData["PageIcon"]"></i> @ViewData["PageTitle"]</h2>
                     <div class="header-actions">
                         <a asp-area="Cabinet" asp-controller="Notification" asp-action="Index" class="notification-bubble">
                             <i class="bi bi-bell"></i>
